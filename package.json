@@ -1,0 +1,25 @@
+{
+  "name": "game_score",
+  "version": "0.1.0",
+  "description": "neighborhood soccer championship simulator",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/murillotlopes/my_championship.git"
+  },
+  "keywords": [
+    "test"
+  ],
+  "author": {
+    "name": "Murillo Torres Lopes",
+    "email": "murillo.tlopes@hotmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/murillotlopes/my_championship/issues"
+  },
+  "homepage": "https://github.com/murillotlopes/my_championship#readme"
+}
