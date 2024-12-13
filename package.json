@@ -1,10 +1,17 @@
 {
-  "name": "game_score",
+  "name": "my_championship",
   "version": "0.1.0",
   "description": "neighborhood soccer championship simulator",
   "main": "server.ts",
+  "engines": {
+    "node": "^20.11.x",
+    "npm": "^10.5.x"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node --env-file=.env dist/src/server.js",
+    "dev": "tsx watch --env-file=.env src/server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -25,9 +32,19 @@
     "url": "https://github.com/murillotlopes/my_championship/issues"
   },
   "homepage": "https://github.com/murillotlopes/my_championship#readme",
+  "dependencies": {
+    "compression": "^1.7.5",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0"
+  },
   "devDependencies": {
+    "@types/compression": "^1.7.5",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.2",
     "commitizen": "^4.3.1",
-    "cz-conventional-changelog": "^3.3.0"
+    "cz-conventional-changelog": "^3.3.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
   },
   "config": {
     "commitizen": {
