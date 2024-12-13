@@ -21,5 +21,14 @@
   "bugs": {
     "url": "https://github.com/murillotlopes/my_championship/issues"
   },
-  "homepage": "https://github.com/murillotlopes/my_championship#readme"
+  "homepage": "https://github.com/murillotlopes/my_championship#readme",
+  "devDependencies": {
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
