@@ -6,3 +6,4 @@ temp/
 .env
 *lock.json
 dist
+coverage/
