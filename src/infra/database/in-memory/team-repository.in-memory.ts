@@ -17,7 +17,7 @@ export default class TeamRepositoryInMemory implements Repository<TeamModel> {
     return data
   }
 
-  async getList(param: unknown): Promise<TeamModel[]> {
+  async getList(param?: unknown): Promise<TeamModel[]> {
     return this.list
   }
 
