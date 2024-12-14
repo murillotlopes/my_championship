@@ -1,14 +1,18 @@
 import { Router } from 'express'
-import championshipController from '../controllers/create-championship.controller'
+import { Route } from '../../shared/route'
+import createChampionshipController from '../controllers/create-championship.controller'
+'../controllers/create-championship.controller'
 
-class ChampionshipRouter {
+class ChampionshipRouter extends Route {
 
-  public prefix = 'championship'
-  private router = Router()
+  constructor() {
+    super()
+    this.prefix = 'championship'
+  }
 
   public registerRoute(): Router {
 
-    this.router.post('/', championshipController.init.bind(this))
+    this.router.post('/', createChampionshipController.init.bind(this))
 
     return this.router
   }
