@@ -46,7 +46,7 @@ export abstract class Controller {
 
     const erros = await validate(prepValidate)
 
-    if (erros.length || errorExtracted) {
+    if (erros.length || Object.keys(errorExtracted).length > 0) {
 
       errorExtracted = { ...errorExtracted, ...extractErrorClassValidator(erros) }
 
