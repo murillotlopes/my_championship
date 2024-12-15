@@ -3,7 +3,7 @@ import path from 'path';
 
 export class GenerateMatchScoreService {
 
-  public async getMatchScores(): Promise<{ teamA: number; teamB: number }> {
+  public async getMatchScores(): Promise<{ teamAscore: number; teamBscore: number }> {
 
     return new Promise((resolve, reject) => {
 
@@ -19,12 +19,12 @@ export class GenerateMatchScoreService {
 
         if (output.length < 2) return reject('Invalid output from Python script')
 
-        const teamA = parseInt(output[0], 10);
-        const teamB = parseInt(output[1], 10);
+        const teamAscore = parseInt(output[0], 10);
+        const teamBscore = parseInt(output[1], 10);
 
-        if (isNaN(teamA) || isNaN(teamB)) return reject('Invalid output: Scores are not valid numbers')
+        if (isNaN(teamAscore) || isNaN(teamBscore)) return reject('Invalid output: Scores are not valid numbers')
 
-        resolve({ teamA, teamB })
+        resolve({ teamAscore, teamBscore })
 
       })
 
