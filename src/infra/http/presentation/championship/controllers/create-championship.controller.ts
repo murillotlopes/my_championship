@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { ChampionshipModel } from '../../../../../core/championship/model/championship.model';
 import { CreateChampionshipUseCase } from '../../../../../core/championship/usecases/create-championshipt.usecase';
-import ChampionshipRepositoryInMemory from '../../../../database/in-memory/championship-repository.in-memory';
+import { ChampionshipRepositoryInMemory } from '../../../../database/in-memory/championship-repository.in-memory';
 import { Controller } from '../../shared/controller';
 import { CreateChampionshipDto } from '../dtos/create-championship.dto';
 
