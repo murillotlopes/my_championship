@@ -1,4 +1,4 @@
-import ChampionshipRepositoryInMemory from '../../../../../infra/database/in-memory/championship-repository.in-memory'
+import { ChampionshipRepositoryInMemory } from '../../../../../infra/database/in-memory/championship-repository.in-memory'
 import { Repository } from '../../../../shared/ports/repository'
 import { ChampionshipModel } from '../../../model/championship.model'
 import { CreateChampionshipUseCase } from '../../create-championshipt.usecase'
