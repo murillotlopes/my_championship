@@ -1,10 +1,10 @@
 
-export interface Repository<T> {
+export interface Repository<M> {
 
-  save(data: T): Promise<T>
-  getList(param: unknown): Promise<T[]>
-  getById(id: unknown): Promise<T | undefined>
-  update(data: Partial<T>, id: unknown): Promise<T | undefined>
+  save(data: M): Promise<M>
+  getList(): Promise<M[]>
+  getById(id: unknown): Promise<M>
+  update(data: Partial<M>, id: unknown): Promise<M>
   delete(id: unknown): Promise<void>
 
 }
