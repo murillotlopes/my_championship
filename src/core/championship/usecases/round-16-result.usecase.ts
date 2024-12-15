@@ -29,10 +29,10 @@ export class Round16ResultUseCase implements UseCase {
 
     for (const bracket of round16) {
 
-      const { teamA, teamB } = await this.generateMatchScoreService.getMatchScores()
+      const { teamAscore, teamBscore } = await this.generateMatchScoreService.getMatchScores()
 
-      bracket.team_a_points = teamA
-      bracket.team_a_points = teamB
+      bracket.team_a_points = teamAscore
+      bracket.team_b_points = teamBscore
 
       await this.bracketRepository.update(bracket, bracket.id)
     }
