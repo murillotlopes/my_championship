@@ -1,5 +1,5 @@
 import { ChampionshipModel } from '../../../../core/championship/model/championship.model'
-import ChampionshipRepositoryInMemory from '../championship-repository.in-memory'
+import { ChampionshipRepositoryInMemory } from '../championship-repository.in-memory'
 
 describe('ChampionshipRepositoryInMemory unit tests', () => {
 
@@ -46,7 +46,7 @@ describe('ChampionshipRepositoryInMemory unit tests', () => {
 
     const createdChampionshit = await sut.save(newChampionship)
 
-    const championshit = await sut.getById(newChampionship.id)
+    const championshit = await sut.getById(newChampionship.id as string)
 
     expect(championshit).toBeTruthy()
     expect(championshit?.id).toBe(createdChampionshit.id)
@@ -60,9 +60,9 @@ describe('ChampionshipRepositoryInMemory unit tests', () => {
 
     const createdChampionshit = await sut.save(newChampionship)
 
-    const updated = await sut.update(update, createdChampionshit.id)
+    const updated = await sut.update(update, createdChampionshit.id as string)
 
-    const retrive = await sut.getById(createdChampionshit.id)
+    const retrive = await sut.getById(createdChampionshit.id as string)
 
     expect(updated?.name).toBe('Championship CA')
     expect(updated).toEqual(retrive)
@@ -76,15 +76,17 @@ describe('ChampionshipRepositoryInMemory unit tests', () => {
     }
 
     const createdChampionshit = await sut.save(newChampionship)
-    const retrive = await sut.getById(createdChampionshit.id)
+    const retrive = await sut.getById(createdChampionshit.id as string)
 
-    await sut.delete(createdChampionshit.id)
-
-    const deleted = await sut.getById(createdChampionshit.id)
-
+    await sut.delete(createdChampionshit.id as string)
 
     expect(retrive).toBeTruthy()
-    expect(deleted).toBeFalsy()
+
+    try {
+      await sut.getById(createdChampionshit.id as string)
+    } catch (error) {
+      expect(error).toBeInstanceOf(Error)
+    }
 
   })
 

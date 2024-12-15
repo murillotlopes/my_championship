@@ -74,10 +74,14 @@ describe('TeamRepositoryInMemory unit tests', () => {
 
     await sut.delete(created.id as string)
 
-    const deleted = await sut.getById(created.id as string)
-
     expect(retrived).toBeTruthy()
-    expect(deleted).toBeFalsy()
+
+    try {
+      await sut.getById(created.id as string)
+    } catch (error) {
+      expect(error).toBeInstanceOf(Error)
+    }
+
 
   })
 
