@@ -4,12 +4,12 @@ import { BracketModel } from '../model/bracket.model';
 import { DrawMatchesInput } from '../model/draw-matches.input';
 import { DrawMatchesOutput } from '../model/draw-matches.output';
 import { Round } from '../model/round.enum';
-import { BracketReposoritoryPort } from '../repository/bracket-repository.port';
+import { BracketRepositoryPort } from '../repository/bracket-repository.port';
 
 export class DrawMatchesUseCase implements UseCase {
 
   constructor(
-    private bracketRepository: BracketReposoritoryPort<BracketModel>
+    private bracketRepository: BracketRepositoryPort<BracketModel>
   ) {
 
   }
