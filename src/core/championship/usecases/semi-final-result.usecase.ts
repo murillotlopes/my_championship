@@ -47,7 +47,7 @@ export class SemiFinalResultUseCase implements UseCase {
       const teamB = await this.defineWinnerService.define(championship.id as string, secondBracket)
 
       const obj: BracketModel = {
-        round: Round.SEMI_FINAL,
+        round: Round.FINAL,
         championship,
         team_a: teamA,
         team_b: teamB
