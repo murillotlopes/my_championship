@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { DrawMatchesInput } from '../../../../../core/bracket/model/draw-matches.input';
 import { ChampionshipModel } from '../../../../../core/championship/model/championship.model';
-import { ChampionshipReposoritoryPort } from '../../../../../core/championship/repository/championship-repository.port';
+import { ChampionshipRepositoryPort } from '../../../../../core/championship/repository/championship-repository.port';
 import { TeamModel } from '../../../../../core/team/model/team.model';
 import { BracketRepositoryInMemory } from '../../../../database/in-memory/bracket-repository.in-memory';
 import { ChampionshipRepositoryInMemory } from '../../../../database/in-memory/championship-repository.in-memory';
@@ -16,7 +16,7 @@ class DrawMatchesController extends Controller {
 
   constructor(
     private readonly drawMatchesUseCase: DrawMatchesUseCase,
-    private readonly championshipRepository: ChampionshipReposoritoryPort<ChampionshipModel>,
+    private readonly championshipRepository: ChampionshipRepositoryPort<ChampionshipModel>,
     private readonly teamRepository: TeamRepositoryPort<TeamModel>,
     protected readonly dto?: any
   ) {
