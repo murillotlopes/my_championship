@@ -14,6 +14,9 @@ export class DefineWinnerService {
 
     const { team_a, team_b } = bracket
 
+    if (Number(bracket.team_a_points) > Number(bracket.team_b_points)) return team_a
+    if (Number(bracket.team_b_points) > Number(bracket.team_a_points)) return team_b
+
     const teamAScore = await this.bracketRepository.score(championshipId, team_a.id)
     const teamBScore = await this.bracketRepository.score(championshipId, team_b.id)
 
