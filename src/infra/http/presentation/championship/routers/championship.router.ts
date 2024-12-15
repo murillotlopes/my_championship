@@ -4,6 +4,7 @@ import createChampionshipController from '../controllers/create-championship.con
 import quarterFinalResultController from '../controllers/quarter-final-result.controller'
 import round16ResultController from '../controllers/round-16-result.controller'
 import semiFinalResultController from '../controllers/semi-final-result.controller'
+import thirdPlaceResultController from '../controllers/third-place-result.controller'
 '../controllers/create-championship.controller'
 
 class ChampionshipRouter extends Route {
@@ -19,6 +20,7 @@ class ChampionshipRouter extends Route {
     this.router.post('/round16/:championshipId', round16ResultController.init.bind(this))
     this.router.post('/quarter-final/:championshipId', quarterFinalResultController.init.bind(this))
     this.router.post('/semi-final/:championshipId', semiFinalResultController.init.bind(this))
+    this.router.post('/third-place-playoff/:championshipId', thirdPlaceResultController.init.bind(this))
 
     return this.router
   }
