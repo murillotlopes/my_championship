@@ -1,25 +1,25 @@
 import { Request } from 'express';
-import { ThirdPlaceOutput } from '../../../../../core/championship/model/third-place.output';
-import { ThirdPlaceResultUseCase } from '../../../../../core/championship/usecases/third-place-result.usecase';
+import { FinalOutput } from '../../../../../core/championship/model/final.output';
+import { FinalResultUseCase } from '../../../../../core/championship/usecases/final-result.usecase';
 import { GenerateMatchScoreService } from '../../../../../core/shared/services/generate-match-score.service';
 import { BracketRepositoryInMemory } from '../../../../database/in-memory/bracket-repository.in-memory';
 import { ChampionshipRepositoryInMemory } from '../../../../database/in-memory/championship-repository.in-memory';
 import { Controller } from '../../shared/controller';
 
-class ThirdPlaceResultController extends Controller {
+class FinalResultController extends Controller {
 
   constructor(
-    private readonly thirdPlaceResultUseCase: ThirdPlaceResultUseCase
+    private readonly finalResultUseCase: FinalResultUseCase
   ) {
     super()
   }
 
 
-  protected execute = async (req: Request): Promise<ThirdPlaceOutput> => {
+  protected execute = async (req: Request): Promise<FinalOutput> => {
 
     const championshipId = req.params.championshipId
 
-    return this.thirdPlaceResultUseCase.execute(championshipId)
+    return this.finalResultUseCase.execute(championshipId)
 
   }
 
@@ -28,6 +28,6 @@ class ThirdPlaceResultController extends Controller {
 const championshipRepository = new ChampionshipRepositoryInMemory()
 const bracketRepository = new BracketRepositoryInMemory()
 const generateMatchScoreService = new GenerateMatchScoreService()
-const thirdPlaceResultUseCase = new ThirdPlaceResultUseCase(championshipRepository, bracketRepository, generateMatchScoreService)
+const finalResultUseCase = new FinalResultUseCase(championshipRepository, bracketRepository, generateMatchScoreService)
 
-export default new ThirdPlaceResultController(thirdPlaceResultUseCase)
+export default new FinalResultController(finalResultUseCase)
