@@ -1,25 +1,26 @@
 import { Request } from 'express';
-import { Round16Output } from '../../../../../core/championship/model/round-16.output';
+import { QuarterFinalOutput } from '../../../../../core/championship/model/quarter-final.output';
+import { QuarterFinalResultUseCase } from '../../../../../core/championship/usecases/quarter-final-result.usecase';
 import { DefineWinnerService } from '../../../../../core/shared/services/define-winner.service';
 import { GenerateMatchScoreService } from '../../../../../core/shared/services/generate-match-score.service';
 import { BracketRepositoryInMemory } from '../../../../database/in-memory/bracket-repository.in-memory';
 import { ChampionshipRepositoryInMemory } from '../../../../database/in-memory/championship-repository.in-memory';
 import { Controller } from '../../shared/controller';
-import { Round16ResultUseCase } from './../../../../../core/championship/usecases/round-16-result.usecase';
 
-class Round16ResultController extends Controller {
+class QuarterFinalResultController extends Controller {
 
   constructor(
-    private readonly round16ResultUseCase: Round16ResultUseCase
+    private readonly quarterFinalResultUseCase: QuarterFinalResultUseCase
   ) {
     super()
   }
 
-  protected execute = async (req: Request): Promise<Round16Output> => {
+  protected execute = async (req: Request): Promise<QuarterFinalOutput> => {
 
     const championshipId = req.params.championshipId
 
-    return this.round16ResultUseCase.execute(championshipId)
+    return this.quarterFinalResultUseCase.execute(championshipId)
+
 
   }
 
@@ -29,6 +30,6 @@ const championshipRepository = new ChampionshipRepositoryInMemory()
 const bracketRepository = new BracketRepositoryInMemory()
 const defineWinnerService = new DefineWinnerService(bracketRepository)
 const generateMatchScoreService = new GenerateMatchScoreService()
-const round16ResultUseCase = new Round16ResultUseCase(championshipRepository, bracketRepository, defineWinnerService, generateMatchScoreService)
+const quarterFinalResultUseCase = new QuarterFinalResultUseCase(championshipRepository, bracketRepository, defineWinnerService, generateMatchScoreService)
 
-export default new Round16ResultController(round16ResultUseCase)
+export default new QuarterFinalResultController(quarterFinalResultUseCase)
