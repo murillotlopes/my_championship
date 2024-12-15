@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import { ThirdPlaceOutput } from '../../../../../core/championship/model/third-place.output';
 import { ThirdPlaceResultUseCase } from '../../../../../core/championship/usecases/third-place-result.usecase';
 import { GenerateMatchScoreService } from '../../../../../core/shared/services/generate-match-score.service';
 import { BracketRepositoryInMemory } from '../../../../database/in-memory/bracket-repository.in-memory';
@@ -14,7 +15,7 @@ class ThirdPlaceResultController extends Controller {
   }
 
 
-  protected execute = async (req: Request): Promise<unknown> => {
+  protected execute = async (req: Request): Promise<ThirdPlaceOutput> => {
 
     const championshipId = req.params.championshipId
 
