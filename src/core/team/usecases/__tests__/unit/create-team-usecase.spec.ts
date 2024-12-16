@@ -1,5 +1,5 @@
 import TeamRepositoryInMemory from '../../../../../infra/database/in-memory/team-repository.in-memory'
-import { Repository } from '../../../../shared/ports/repository'
+import { Repository } from '../../../../shared/providers/repository'
 import { TeamModel } from '../../../model/team.model'
 import { CreateTeamUseCase } from '../../create-team.usecase'
 

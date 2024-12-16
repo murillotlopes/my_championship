@@ -1,19 +1,19 @@
 import { BracketModel } from '../../bracket/model/bracket.model'
 import { Round } from '../../bracket/model/round.enum'
-import { BracketRepositoryPort } from '../../bracket/repository/bracket-repository.port'
-import { UseCase } from '../../shared/ports/usecase'
+import { BracketRepositoryProvider } from '../../bracket/repository/bracket-repository.provider'
+import { UseCase } from '../../shared/providers/usecase'
 import { DefineWinnerService } from '../../shared/services/define-winner.service'
 import { GenerateMatchScoreService } from '../../shared/services/generate-match-score.service'
 import { ChampionshipModel } from '../model/championship.model'
 import { SemiFinalOutput } from '../model/semi-final.output'
-import { ChampionshipRepositoryPort } from '../repository/championship-repository.port'
+import { ChampionshipRepositoryProvider } from '../repository/championship-repository.provider'
 
 
 export class SemiFinalResultUseCase implements UseCase {
 
   constructor(
-    private championshipRepository: ChampionshipRepositoryPort<ChampionshipModel>,
-    private bracketRepository: BracketRepositoryPort<BracketModel>,
+    private championshipRepository: ChampionshipRepositoryProvider<ChampionshipModel>,
+    private bracketRepository: BracketRepositoryProvider<BracketModel>,
     private defineWinnerService: DefineWinnerService,
     private generateMatchScoreService: GenerateMatchScoreService
   ) { }

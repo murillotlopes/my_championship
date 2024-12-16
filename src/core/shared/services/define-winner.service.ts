@@ -1,11 +1,11 @@
 import { BracketModel } from '../../bracket/model/bracket.model';
-import { BracketRepositoryPort } from '../../bracket/repository/bracket-repository.port';
+import { BracketRepositoryProvider } from '../../bracket/repository/bracket-repository.provider';
 import { TeamModel } from '../../team/model/team.model';
 
 export class DefineWinnerService {
 
   constructor(
-    private bracketRepository: BracketRepositoryPort<BracketModel>
+    private bracketRepository: BracketRepositoryProvider<BracketModel>
   ) {
 
   }

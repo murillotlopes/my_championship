@@ -1,15 +1,15 @@
-import { UseCase } from '../../shared/ports/usecase';
+import { UseCase } from '../../shared/providers/usecase';
 import { TeamModel } from '../../team/model/team.model';
 import { BracketModel } from '../model/bracket.model';
 import { DrawMatchesInput } from '../model/draw-matches.input';
 import { DrawMatchesOutput } from '../model/draw-matches.output';
 import { Round } from '../model/round.enum';
-import { BracketRepositoryPort } from '../repository/bracket-repository.port';
+import { BracketRepositoryProvider } from '../repository/bracket-repository.provider';
 
 export class DrawMatchesUseCase implements UseCase {
 
   constructor(
-    private bracketRepository: BracketRepositoryPort<BracketModel>
+    private bracketRepository: BracketRepositoryProvider<BracketModel>
   ) {
 
   }

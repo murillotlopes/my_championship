@@ -1,11 +1,11 @@
-import { Repository } from '../../shared/ports/repository';
-import { UseCase } from '../../shared/ports/usecase';
+import { UseCase } from '../../shared/providers/usecase';
 import { ChampionshipModel } from '../model/championship.model';
+import { ChampionshipRepositoryProvider } from '../repository/championship-repository.provider';
 
 export class CreateChampionshipUseCase implements UseCase {
 
   constructor(
-    private championshipRepository: Repository<ChampionshipModel>
+    private championshipRepository: ChampionshipRepositoryProvider<ChampionshipModel>
   ) { }
 
   public execute = async (input: ChampionshipModel) => {
