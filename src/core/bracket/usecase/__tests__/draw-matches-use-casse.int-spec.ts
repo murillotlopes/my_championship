@@ -1,10 +1,10 @@
-import { BracketRepositoryInMemory } from '../../../../../infra/database/in-memory/bracket-repository.in-memory'
-import { createChampionshipMock } from '../../../../../mocks/__tests__/championship.mock'
-import { createTeamMock } from '../../../../../mocks/__tests__/team.mock'
-import { DrawMatchesInput } from '../../../model/draw-matches.input'
-import { DrawMatchesUseCase } from '../../draw-matches.usecase'
+import { BracketRepositoryInMemory } from '../../../../infra/database/in-memory/bracket-repository.in-memory'
+import { createChampionshipMock } from '../../../../mocks/__tests__/championship.mock'
+import { createTeamMock } from '../../../../mocks/__tests__/team.mock'
+import { DrawMatchesInput } from '../../model/draw-matches.input'
+import { DrawMatchesUseCase } from '../draw-matches.usecase'
 
-describe('DrawMatchesUseCase unit tests', () => {
+describe('DrawMatchesUseCase integration tests', () => {
 
   let sut: DrawMatchesUseCase
   let repository: BracketRepositoryInMemory
