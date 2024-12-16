@@ -3,8 +3,8 @@ import { ArrayMaxSize, ArrayMinSize, IsArray, IsString } from 'class-validator';
 export class DrawMatchesInputDto {
 
   @IsArray()
-  @ArrayMaxSize(16)
-  @ArrayMinSize(16)
+  @ArrayMaxSize(8)
+  @ArrayMinSize(8)
   @IsString({ each: true })
   teams!: string[]
 
