@@ -1,9 +1,9 @@
 import { BracketModel } from '../../../core/bracket/model/bracket.model';
 import { Round } from '../../../core/bracket/model/round.enum';
-import { RepositoryInMemory } from '../shared/repository-in-memory';
-import { BracketRepositoryPort } from './../../../core/bracket/repository/bracket-repository.port';
+import { BracketRepositoryProvider } from '../../../core/bracket/repository/bracket-repository.provider';
+import { RepositoryInMemory } from './shared/repository-in-memory';
 
-export class BracketRepositoryInMemory extends RepositoryInMemory<BracketModel> implements BracketRepositoryPort<BracketModel> {
+export class BracketRepositoryInMemory extends RepositoryInMemory<BracketModel> implements BracketRepositoryProvider<BracketModel> {
 
   async getChampionship(championshipId: string, round?: Round): Promise<BracketModel[]> {
 

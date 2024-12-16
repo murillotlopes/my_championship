@@ -1,10 +1,10 @@
-import { BracketRepositoryInMemory } from '../../../../../infra/database/in-memory/bracket-repository.in-memory'
-import { ChampionshipRepositoryInMemory } from '../../../../../infra/database/in-memory/championship-repository.in-memory'
-import { DefineWinnerService } from '../../../../shared/services/define-winner.service'
-import { GenerateMatchScoreService } from '../../../../shared/services/generate-match-score.service'
-import { Round16ResultUseCase } from '../../round-16-result.usecase'
+import { BracketRepositoryInMemory } from '../../../../infra/database/in-memory/bracket-repository.in-memory'
+import { ChampionshipRepositoryInMemory } from '../../../../infra/database/in-memory/championship-repository.in-memory'
+import { DefineWinnerService } from '../../../shared/services/define-winner.service'
+import { GenerateMatchScoreService } from '../../../shared/services/generate-match-score.service'
+import { Round16ResultUseCase } from '../round-16-result.usecase'
 
-describe('Round16ResultUseCase unit tests', () => {
+describe('Round16ResultUseCase integration tests', () => {
 
   let sut: Round16ResultUseCase
   let championshipRepository: ChampionshipRepositoryInMemory

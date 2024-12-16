@@ -1,12 +1,12 @@
-import { UseCase } from '../../shared/ports/usecase';
+import { UseCase } from '../../shared/providers/usecase';
 import { TeamModel } from '../model/team.model';
-import { TeamRepositoryPort } from '../repository/team-repository.port';
+import { TeamRepositoryProvider } from '../repository/team-repository.provider';
 
 
 export class CreateTeamUseCase implements UseCase {
 
   constructor(
-    private teamRepository: TeamRepositoryPort<TeamModel>
+    private teamRepository: TeamRepositoryProvider<TeamModel>
   ) { }
 
   public execute = async (input: TeamModel) => {

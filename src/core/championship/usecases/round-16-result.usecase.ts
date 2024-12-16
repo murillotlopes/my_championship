@@ -1,18 +1,18 @@
 import { BracketModel } from '../../bracket/model/bracket.model';
 import { Round } from '../../bracket/model/round.enum';
-import { BracketRepositoryPort } from '../../bracket/repository/bracket-repository.port';
-import { UseCase } from '../../shared/ports/usecase';
+import { BracketRepositoryProvider } from '../../bracket/repository/bracket-repository.provider';
+import { UseCase } from '../../shared/providers/usecase';
 import { DefineWinnerService } from '../../shared/services/define-winner.service';
 import { GenerateMatchScoreService } from '../../shared/services/generate-match-score.service';
 import { ChampionshipModel } from '../model/championship.model';
 import { Round16Output } from '../model/round-16.output';
-import { ChampionshipRepositoryPort } from '../repository/championship-repository.port';
+import { ChampionshipRepositoryProvider } from '../repository/championship-repository.provider';
 
 export class Round16ResultUseCase implements UseCase {
 
   constructor(
-    private championshipRepository: ChampionshipRepositoryPort<ChampionshipModel>,
-    private bracketRepository: BracketRepositoryPort<BracketModel>,
+    private championshipRepository: ChampionshipRepositoryProvider<ChampionshipModel>,
+    private bracketRepository: BracketRepositoryProvider<BracketModel>,
     private defineWinnerService: DefineWinnerService,
     private generateMatchScoreService: GenerateMatchScoreService
   ) { }
@@ -42,8 +42,8 @@ export class Round16ResultUseCase implements UseCase {
       const firstBracket = round16[i]
       const secondBracket = round16[i + 1]
 
-      const teamA = await this.defineWinnerService.define(championship.id as string, firstBracket)
-      const teamB = await this.defineWinnerService.define(championship.id as string, secondBracket)
+      const teamA = await this.defineWinnerService.ofTheMatch(championship.id as string, firstBracket)
+      const teamB = await this.defineWinnerService.ofTheMatch(championship.id as string, secondBracket)
 
       const obj: BracketModel = {
         round: Round.QUARTER_FINAL,

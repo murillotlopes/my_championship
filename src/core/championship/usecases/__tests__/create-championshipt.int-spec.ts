@@ -1,9 +1,9 @@
-import { ChampionshipRepositoryInMemory } from '../../../../../infra/database/in-memory/championship-repository.in-memory'
-import { Repository } from '../../../../shared/ports/repository'
-import { ChampionshipModel } from '../../../model/championship.model'
-import { CreateChampionshipUseCase } from '../../create-championshipt.usecase'
+import { ChampionshipRepositoryInMemory } from '../../../../infra/database/in-memory/championship-repository.in-memory'
+import { Repository } from '../../../shared/providers/repository'
+import { ChampionshipModel } from '../../model/championship.model'
+import { CreateChampionshipUseCase } from '../create-championshipt.usecase'
 
-describe('CreateChampionshipUseCase unit tests', () => {
+describe('CreateChampionshipUseCase integration tests', () => {
 
   let sut: CreateChampionshipUseCase
   let repository: Repository<ChampionshipModel>

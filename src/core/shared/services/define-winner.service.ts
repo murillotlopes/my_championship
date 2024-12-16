@@ -1,16 +1,17 @@
 import { BracketModel } from '../../bracket/model/bracket.model';
-import { BracketRepositoryPort } from '../../bracket/repository/bracket-repository.port';
+import { Round } from '../../bracket/model/round.enum';
+import { BracketRepositoryProvider } from '../../bracket/repository/bracket-repository.provider';
 import { TeamModel } from '../../team/model/team.model';
 
 export class DefineWinnerService {
 
   constructor(
-    private bracketRepository: BracketRepositoryPort<BracketModel>
+    private bracketRepository: BracketRepositoryProvider<BracketModel>
   ) {
 
   }
 
-  public async define(championshipId: string, bracket: BracketModel): Promise<TeamModel> {
+  public async ofTheMatch(championshipId: string, bracket: BracketModel): Promise<TeamModel> {
 
     const { team_a, team_b } = bracket
 
@@ -23,10 +24,15 @@ export class DefineWinnerService {
     if (teamAScore > teamBScore) return team_a
     if (teamBScore > teamAScore) return team_b
 
-    const teamAcreated_at = new Date(team_a.created_at as Date).getTime()
-    const teamBcreated_at = new Date(team_b.created_at as Date).getTime()
+    const quarterFinalList = await this.bracketRepository.getChampionship(championshipId, Round.QUARTER_FINAL)
 
-    return teamAcreated_at > teamBcreated_at ? team_a : team_b
+    const bracketTeamA = quarterFinalList.find(item => item.team_a.id === team_a.id || item.team_b.id === team_a.id) as BracketModel
+    const bracketTeamB = quarterFinalList.find(item => item.team_a.id === team_b.id || item.team_b.id === team_b.id) as BracketModel
+
+    const teamAinserted_at = new Date(bracketTeamA.created_at as Date).getTime()
+    const teamBinserted_at = new Date(bracketTeamB.created_at as Date).getTime()
+
+    return teamAinserted_at >= teamBinserted_at ? team_a : team_b
 
   }
 

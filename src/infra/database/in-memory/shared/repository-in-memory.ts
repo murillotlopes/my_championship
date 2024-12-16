@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
-import { BaseModel } from '../../../core/shared/model/base.model';
-import { Repository } from '../../../core/shared/ports/repository';
+import { BaseModel } from '../../../../core/shared/model/base.model';
+import { Repository } from '../../../../core/shared/providers/repository';
 
 export abstract class RepositoryInMemory<M extends BaseModel> implements Repository<M> {
 

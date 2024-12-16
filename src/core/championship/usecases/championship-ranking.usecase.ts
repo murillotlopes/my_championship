@@ -1,18 +1,18 @@
 import { BracketModel } from '../../bracket/model/bracket.model';
 import { Round } from '../../bracket/model/round.enum';
-import { BracketRepositoryPort } from '../../bracket/repository/bracket-repository.port';
-import { UseCase } from '../../shared/ports/usecase';
+import { BracketRepositoryProvider } from '../../bracket/repository/bracket-repository.provider';
+import { UseCase } from '../../shared/providers/usecase';
 import { DefineWinnerService } from '../../shared/services/define-winner.service';
 import { ChampionshipModel } from '../model/championship.model';
 import { GeneralClassificationOutput } from '../model/general-classification.output';
 import { RankingOutput } from '../model/ranking.output';
-import { ChampionshipRepositoryPort } from './../repository/championship-repository.port';
+import { ChampionshipRepositoryProvider } from '../repository/championship-repository.provider';
 
 export class ChampionshipRankingUseCase implements UseCase {
 
   constructor(
-    private championshipRepository: ChampionshipRepositoryPort<ChampionshipModel>,
-    private bracketRepository: BracketRepositoryPort<BracketModel>,
+    private championshipRepository: ChampionshipRepositoryProvider<ChampionshipModel>,
+    private bracketRepository: BracketRepositoryProvider<BracketModel>,
     private defineWinnerService: DefineWinnerService,
   ) { }
 
@@ -36,7 +36,7 @@ export class ChampionshipRankingUseCase implements UseCase {
 
     // 1º - vencedor da final
     const final = finalList[0]
-    const champion = await this.defineWinnerService.define(championship.id as string, final)
+    const champion = await this.defineWinnerService.ofTheMatch(championship.id as string, final)
     const championScore = await this.bracketRepository.score(championship.id as string, champion.id as string)
 
     generalClassification.ranking.push({
@@ -61,7 +61,7 @@ export class ChampionshipRankingUseCase implements UseCase {
     const playoffList = await this.bracketRepository.getChampionship(champion.id as string, Round.THIRD_PLACE_PLAYOFF)
     const playoff = playoffList[0]
 
-    const thirdPlace = await this.defineWinnerService.define(championship.id as string, playoff)
+    const thirdPlace = await this.defineWinnerService.ofTheMatch(championship.id as string, playoff)
     const thirdScore = await this.bracketRepository.score(champion.id as string, thirdPlace.id)
 
     generalClassification.ranking.push({

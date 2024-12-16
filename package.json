@@ -12,6 +12,9 @@
     "dev": "tsx watch --env-file=.env src/server.ts",
     "test": "jest",
     "test:w": "jest --watch",
+    "test:unit": "jest --config ./jest.unit.config.js",
+    "test:int": "jest --config ./jest.int.config.js",
+    "test:e2e": "jest --config ./jest.e2e.config.js",
     "test:cov": "jest --coverage",
     "build": "tsc"
   },

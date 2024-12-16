@@ -1,5 +1,5 @@
 import { ValidationError } from 'class-validator';
-import { ExtractError } from '../../core/shared/ports/extractError';
+import { ExtractError } from '../../core/shared/providers/extractError';
 import { ExtractedError } from '../../core/shared/types/extracted-error.type';
 
 export const extractErrorClassValidator: ExtractError = (errors: ValidationError[]) => {

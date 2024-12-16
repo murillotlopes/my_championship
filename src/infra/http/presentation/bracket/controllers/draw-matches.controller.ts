@@ -1,8 +1,9 @@
 import { Request } from 'express';
 import { DrawMatchesInput } from '../../../../../core/bracket/model/draw-matches.input';
 import { ChampionshipModel } from '../../../../../core/championship/model/championship.model';
-import { ChampionshipRepositoryPort } from '../../../../../core/championship/repository/championship-repository.port';
+import { ChampionshipRepositoryProvider } from '../../../../../core/championship/repository/championship-repository.provider';
 import { TeamModel } from '../../../../../core/team/model/team.model';
+import { TeamRepositoryProvider } from '../../../../../core/team/repository/team-repository.provider';
 import { BracketRepositoryInMemory } from '../../../../database/in-memory/bracket-repository.in-memory';
 import { ChampionshipRepositoryInMemory } from '../../../../database/in-memory/championship-repository.in-memory';
 import TeamRepositoryInMemory from '../../../../database/in-memory/team-repository.in-memory';
@@ -10,14 +11,13 @@ import { Controller } from '../../shared/controller';
 import { DrawMatchesInputDto } from '../dtos/draw-matches-input.dto';
 import { DrawMatchesOutput } from './../../../../../core/bracket/model/draw-matches.output';
 import { DrawMatchesUseCase } from './../../../../../core/bracket/usecase/draw-matches.usecase';
-import { TeamRepositoryPort } from './../../../../../core/team/repository/team-repository.port';
 
 class DrawMatchesController extends Controller {
 
   constructor(
     private readonly drawMatchesUseCase: DrawMatchesUseCase,
-    private readonly championshipRepository: ChampionshipRepositoryPort<ChampionshipModel>,
-    private readonly teamRepository: TeamRepositoryPort<TeamModel>,
+    private readonly championshipRepository: ChampionshipRepositoryProvider<ChampionshipModel>,
+    private readonly teamRepository: TeamRepositoryProvider<TeamModel>,
     protected readonly dto?: any
   ) {
     super(dto)
