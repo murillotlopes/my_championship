@@ -22,13 +22,13 @@ describe('GenerateMatchScoreService unit tests', () => {
 
     expect(result).toBeTruthy()
 
-    expect(result).toHaveProperty('teamA')
-    expect(typeof result.teamA).toBe('number')
-    expect(Number.isInteger((result.teamA))).toBe(true)
+    expect(result).toHaveProperty('teamAscore')
+    expect(typeof result.teamAscore).toBe('number')
+    expect(Number.isInteger((result.teamAscore))).toBe(true)
 
-    expect(result).toHaveProperty('teamB')
-    expect(typeof result.teamB).toBe('number')
-    expect(Number.isInteger((result.teamB))).toBe(true)
+    expect(result).toHaveProperty('teamBscore')
+    expect(typeof result.teamBscore).toBe('number')
+    expect(Number.isInteger((result.teamBscore))).toBe(true)
 
   })
 
