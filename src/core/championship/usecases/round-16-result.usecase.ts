@@ -42,8 +42,8 @@ export class Round16ResultUseCase implements UseCase {
       const firstBracket = round16[i]
       const secondBracket = round16[i + 1]
 
-      const teamA = await this.defineWinnerService.define(championship.id as string, firstBracket)
-      const teamB = await this.defineWinnerService.define(championship.id as string, secondBracket)
+      const teamA = await this.defineWinnerService.ofTheMatch(championship.id as string, firstBracket)
+      const teamB = await this.defineWinnerService.ofTheMatch(championship.id as string, secondBracket)
 
       const obj: BracketModel = {
         round: Round.QUARTER_FINAL,

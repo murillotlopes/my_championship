@@ -36,7 +36,7 @@ export class ChampionshipRankingUseCase implements UseCase {
 
     // 1º - vencedor da final
     const final = finalList[0]
-    const champion = await this.defineWinnerService.define(championship.id as string, final)
+    const champion = await this.defineWinnerService.ofTheMatch(championship.id as string, final)
     const championScore = await this.bracketRepository.score(championship.id as string, champion.id as string)
 
     generalClassification.ranking.push({
@@ -61,7 +61,7 @@ export class ChampionshipRankingUseCase implements UseCase {
     const playoffList = await this.bracketRepository.getChampionship(champion.id as string, Round.THIRD_PLACE_PLAYOFF)
     const playoff = playoffList[0]
 
-    const thirdPlace = await this.defineWinnerService.define(championship.id as string, playoff)
+    const thirdPlace = await this.defineWinnerService.ofTheMatch(championship.id as string, playoff)
     const thirdScore = await this.bracketRepository.score(champion.id as string, thirdPlace.id)
 
     generalClassification.ranking.push({

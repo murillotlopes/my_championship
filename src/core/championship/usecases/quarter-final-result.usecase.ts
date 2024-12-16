@@ -42,8 +42,8 @@ export class QuarterFinalResultUseCase implements UseCase {
       const firstBracket = quarter_final[i]
       const secondBracket = quarter_final[i + 1]
 
-      const teamA = await this.defineWinnerService.define(championship.id as string, firstBracket)
-      const teamB = await this.defineWinnerService.define(championship.id as string, secondBracket)
+      const teamA = await this.defineWinnerService.ofTheMatch(championship.id as string, firstBracket)
+      const teamB = await this.defineWinnerService.ofTheMatch(championship.id as string, secondBracket)
 
       const obj: BracketModel = {
         round: Round.SEMI_FINAL,
