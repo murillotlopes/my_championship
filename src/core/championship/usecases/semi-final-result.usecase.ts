@@ -81,7 +81,7 @@ export class SemiFinalResultUseCase implements UseCase {
 
     }
 
-    const third_place_playoff = await this.bracketRepository.getChampionship(championship.id, Round.FINAL)
+    const third_place_playoff = await this.bracketRepository.getChampionship(championship.id, Round.THIRD_PLACE_PLAYOFF)
     const final = await this.bracketRepository.getChampionship(championship.id, Round.FINAL)
 
     const semiFinalOutput: SemiFinalOutput = {
