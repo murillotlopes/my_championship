@@ -65,7 +65,7 @@ describe('ChampionshipRepositoryTypeORM unit tests', () => {
 
     const createdChampionshit = await sut.save(newChampionship)
 
-    const championshit = await sut.getById(newChampionship.id as string)
+    const championshit = await sut.getById(createdChampionshit.id as string)
 
     expect(championshit).toBeTruthy()
     expect(championshit?.id).toBe(createdChampionshit.id)
