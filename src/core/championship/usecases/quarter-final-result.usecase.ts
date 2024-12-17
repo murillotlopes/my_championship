@@ -4,6 +4,8 @@ import { BracketRepositoryProvider } from '../../bracket/repository/bracket-repo
 import { UseCase } from '../../shared/providers/usecase';
 import { DefineWinnerService } from '../../shared/services/define-winner.service';
 import { GenerateMatchScoreService } from '../../shared/services/generate-match-score.service';
+import { ShuffleArray } from '../../shared/services/shuffle-array.service';
+import { TeamModel } from '../../team/model/team.model';
 import { ChampionshipModel } from '../model/championship.model';
 import { QuarterFinalOutput } from '../model/quarter-final.output';
 import { ChampionshipRepositoryProvider } from '../repository/championship-repository.provider';
@@ -14,7 +16,8 @@ export class QuarterFinalResultUseCase implements UseCase {
     private championshipRepository: ChampionshipRepositoryProvider<ChampionshipModel>,
     private bracketRepository: BracketRepositoryProvider<BracketModel>,
     private defineWinnerService: DefineWinnerService,
-    private generateMatchScoreService: GenerateMatchScoreService
+    private generateMatchScoreService: GenerateMatchScoreService,
+    private shuffleArray: ShuffleArray
   ) { }
 
   public execute = async (input: string): Promise<QuarterFinalOutput> => {
@@ -25,7 +28,7 @@ export class QuarterFinalResultUseCase implements UseCase {
 
     const quarter_final = await this.bracketRepository.getChampionship(championship.id, Round.QUARTER_FINAL)
 
-    if (quarter_final.find(item => item.team_a_points)) throw new Error('Quarter final already classified')
+    if (quarter_final.find(item => item.realized)) throw new Error('Quarter final already classified')
 
     for (const bracket of quarter_final) {
 
@@ -33,26 +36,38 @@ export class QuarterFinalResultUseCase implements UseCase {
 
       bracket.team_a_points = teamAscore
       bracket.team_b_points = teamBscore
+      bracket.realized = true
 
       await this.bracketRepository.update(bracket, bracket.id)
     }
 
-    for (let i = 0; i < quarter_final.length; i += 2) {
+    const quarterFinalWinners: TeamModel[] = []
 
-      const firstBracket = quarter_final[i]
-      const secondBracket = quarter_final[i + 1]
+    for (const match of quarter_final) {
 
-      const teamA = await this.defineWinnerService.ofTheMatch(championship.id as string, firstBracket)
-      const teamB = await this.defineWinnerService.ofTheMatch(championship.id as string, secondBracket)
+      const team = await this.defineWinnerService.ofTheMatch(championship.id as string, match)
+
+      quarterFinalWinners.push(team)
+
+    }
+
+    const shuffledTeams = this.shuffleArray.shuffle(quarterFinalWinners)
+
+    for (let i = 0; i < shuffledTeams.length; i += 2) {
+
+      const teamA = shuffledTeams[i]
+      const teamB = shuffledTeams[i + 1]
 
       const obj: BracketModel = {
         round: Round.SEMI_FINAL,
         championship,
         team_a: teamA,
-        team_b: teamB
+        team_b: teamB,
+        realized: false
       }
 
       await this.bracketRepository.save(obj)
+
     }
 
     const semi_final = await this.bracketRepository.getChampionship(championship.id, Round.SEMI_FINAL)
@@ -65,7 +80,5 @@ export class QuarterFinalResultUseCase implements UseCase {
     return quarterFinalOutput
 
   }
-
-
 
 }

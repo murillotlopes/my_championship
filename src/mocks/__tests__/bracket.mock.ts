@@ -11,6 +11,7 @@ export const createBracketMock = (round: Round, championship: ChampionshipModel,
     team_a: createTeamMock(true),
     team_b: createTeamMock(true),
     championship: championship,
+    realized: false
   }
 
   if (full) {

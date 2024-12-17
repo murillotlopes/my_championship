@@ -11,5 +11,6 @@ export interface BracketModel extends BaseModel {
   team_a: TeamModel
   team_b: TeamModel
   championship: ChampionshipModel
+  realized: boolean
 
 }

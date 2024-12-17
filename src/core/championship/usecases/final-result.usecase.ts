@@ -23,7 +23,7 @@ export class FinalResultUseCase implements UseCase {
 
     const finalBracket = await this.bracketRepository.getChampionship(championship.id, Round.FINAL)
 
-    if (finalBracket.find(item => item.team_a_points)) throw new Error('Third Place Playoff already classified')
+    if (finalBracket.find(item => item.team_a_points)) throw new Error('Final already classified')
 
     const final = finalBracket[0]
 

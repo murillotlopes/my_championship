@@ -22,23 +22,25 @@ export abstract class RepositoryInMemory<M extends BaseModel> implements Reposit
     return this.list
   }
 
-  async getById(id: string): Promise<M> {
+  async getById(id: string): Promise<M | undefined> {
 
     const item = this.list.find(item => item.id === id)
 
-    if (!item) throw new Error('Resource not found')
+    if (!item) return
 
     return item
 
   }
 
-  async update(data: Partial<M>, id: string): Promise<M> {
+  async update(data: Partial<M>, id: string): Promise<M | undefined> {
 
     const idx = this.list.findIndex(item => item.id === id)
 
-    if (!idx) throw new Error('Resource not found')
+    if (!idx) return
 
     const oldData = this.list[idx]
+
+    data.updated_at = new Date()
 
     const newData = Object.assign({}, oldData, data)
 
@@ -48,13 +50,17 @@ export abstract class RepositoryInMemory<M extends BaseModel> implements Reposit
 
   }
 
-  async delete(id: string): Promise<void> {
+  async delete(id: string): Promise<M | undefined> {
 
     const idx = this.list.findIndex(item => item.id === id)
 
-    if (!idx) throw new Error('Resource not found')
+    if (!idx) return
+
+    const willBeDeleted = this.list[idx]
 
     this.list.splice(idx, 1)
+
+    return willBeDeleted
 
   }
 

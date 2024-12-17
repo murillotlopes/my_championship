@@ -27,7 +27,7 @@ export class ChampionshipRankingUseCase implements UseCase {
     // se o campeonato foi finalizado
     const finalList = await this.bracketRepository.getChampionship(championship.id, Round.FINAL)
 
-    if (finalList.find(item => item.team_a_points)) throw new Error('The championship has not been finalized')
+    if (finalList.find(item => !item.realized)) throw new Error('The championship has not been finalized')
 
     const generalClassification: GeneralClassificationOutput = {
       championship,
@@ -58,11 +58,11 @@ export class ChampionshipRankingUseCase implements UseCase {
     })
 
     // 3º - terceiro lugar vencedor do playoff
-    const playoffList = await this.bracketRepository.getChampionship(champion.id as string, Round.THIRD_PLACE_PLAYOFF)
+    const playoffList = await this.bracketRepository.getChampionship(championship.id as string, Round.THIRD_PLACE_PLAYOFF)
     const playoff = playoffList[0]
 
     const thirdPlace = await this.defineWinnerService.ofTheMatch(championship.id as string, playoff)
-    const thirdScore = await this.bracketRepository.score(champion.id as string, thirdPlace.id)
+    const thirdScore = await this.bracketRepository.score(championship.id as string, thirdPlace.id)
 
     generalClassification.ranking.push({
       team_name: thirdPlace.name,
@@ -82,21 +82,20 @@ export class ChampionshipRankingUseCase implements UseCase {
       team_registration_date: fourthPlace.created_at as Date
     })
 
-
     // 5º - quinto, sexto, setimo e oitavo lugares perdedores das quartas de finais
-    const quarterList = await this.bracketRepository.getChampionship(champion.id as string, Round.QUARTER_FINAL)
+    const quarterList = await this.bracketRepository.getChampionship(championship.id as string, Round.QUARTER_FINAL)
     const fromFifthToEighth: RankingOutput[] = []
 
     for (const bracket of quarterList) {
 
       const team = generalClassification.ranking.find(item => item.team_name === bracket.team_a.name) ? bracket.team_b : bracket.team_a
-      const scoreTeam = await this.bracketRepository.score(champion.id as string, team.id)
+      const scoreTeam = await this.bracketRepository.score(championship.id as string, team.id)
 
       const ranking: RankingOutput = {
         team_name: team.name,
         total_score: scoreTeam,
         placement_ranking: 0,
-        team_registration_date: team.created_at as Date
+        team_registration_date: bracket.created_at as Date
       }
 
       fromFifthToEighth.push(ranking)
@@ -105,11 +104,11 @@ export class ChampionshipRankingUseCase implements UseCase {
 
     fromFifthToEighth.sort((a, b) => {
 
-      if (a.total_score > b.total_score) return 1
-      if (b.total_score > a.total_score) return 1
+      if (a.total_score > b.total_score) return -1
+      if (b.total_score > a.total_score) return -1
 
-      if (new Date(a.team_registration_date).getTime() > new Date(b.team_registration_date).getTime()) return 1
-      else return -1
+      if (new Date(a.team_registration_date).getTime() > new Date(b.team_registration_date).getTime()) return -1
+      else return 1
 
     })
 
@@ -119,39 +118,7 @@ export class ChampionshipRankingUseCase implements UseCase {
       ranking++
     })
 
-    // 6ª - nono, decimo, ..., decimo sexto lugares perdedores das quartas de finais
-    const round16List = await this.bracketRepository.getChampionship(champion.id as string, Round.ROUND_OF_16)
-    const fromNinthToSixteenth: RankingOutput[] = []
-
-    for (const bracket of round16List) {
-      const team = generalClassification.ranking.find(item => item.team_name === bracket.team_a.name) ? bracket.team_b : bracket.team_a
-      const scoreTeam = await this.bracketRepository.score(champion.id as string, team.id)
-
-      const ranking: RankingOutput = {
-        team_name: team.name,
-        total_score: scoreTeam,
-        placement_ranking: 0,
-        team_registration_date: team.created_at as Date
-      }
-
-      fromNinthToSixteenth.push(ranking)
-
-    }
-
-    fromNinthToSixteenth.sort((a, b) => {
-
-      if (a.total_score > b.total_score) return 1
-      if (b.total_score > a.total_score) return 1
-
-      if (new Date(a.team_registration_date).getTime() > new Date(b.team_registration_date).getTime()) return 1
-      else return -1
-
-    })
-
-    fromFifthToEighth.forEach(item => {
-      item.placement_ranking = ranking
-      ranking++
-    })
+    generalClassification.ranking.push(...fromFifthToEighth)
 
     return generalClassification
 

@@ -9,13 +9,13 @@ export class BracketRepositoryInMemory extends RepositoryInMemory<BracketModel> 
 
     const bracketList = this.list.filter(item => item.championship.id === championshipId)
 
-    if (!bracketList.length) throw new Error('Resource not found')
+    if (!bracketList.length) return []
 
     if (!round) return bracketList
 
     const bracketListForRound = bracketList.filter(item => item.round === round)
 
-    if (!bracketListForRound.length) throw new Error('Resource not found')
+    if (!bracketListForRound.length) return []
 
     return bracketListForRound
 

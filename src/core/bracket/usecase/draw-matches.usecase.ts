@@ -1,5 +1,9 @@
+import { ChampionshipModel } from '../../championship/model/championship.model';
+import { ChampionshipRepositoryProvider } from '../../championship/repository/championship-repository.provider';
 import { UseCase } from '../../shared/providers/usecase';
+import { ShuffleArray } from '../../shared/services/shuffle-array.service';
 import { TeamModel } from '../../team/model/team.model';
+import { TeamRepositoryProvider } from '../../team/repository/team-repository.provider';
 import { BracketModel } from '../model/bracket.model';
 import { DrawMatchesInput } from '../model/draw-matches.input';
 import { DrawMatchesOutput } from '../model/draw-matches.output';
@@ -9,33 +13,51 @@ import { BracketRepositoryProvider } from '../repository/bracket-repository.prov
 export class DrawMatchesUseCase implements UseCase {
 
   constructor(
-    private bracketRepository: BracketRepositoryProvider<BracketModel>
+    private bracketRepository: BracketRepositoryProvider<BracketModel>,
+    private championshipRepository: ChampionshipRepositoryProvider<ChampionshipModel>,
+    private teamRepository: TeamRepositoryProvider<TeamModel>,
+    private shuffleArray: ShuffleArray
   ) {
 
   }
 
   public execute = async (input: DrawMatchesInput): Promise<DrawMatchesOutput[]> => {
 
-    const shuffledTeams = this.shuffleArray(input.teams)
+    const championship = await this.championshipRepository.getById(input.championshipId)
+
+    if (!championship) throw new Error('Championship not found')
+
+    const quarterDrawn = await this.bracketRepository.getChampionship(input.championshipId, Round.QUARTER_FINAL)
+
+    if (quarterDrawn.length) throw new Error('The championship has already been drawn')
+
+    const teamsList: TeamModel[] = []
+    for (const id of input.teams) {
+      const team = await this.teamRepository.getById(id) as TeamModel
+      teamsList.push(team)
+    }
+
+    const shuffledTeams = this.shuffleArray.shuffle(teamsList)
 
     for (let i = 0; i < shuffledTeams.length; i += 2) {
 
       const bracket: BracketModel = {
-        round: Round.ROUND_OF_16,
+        round: Round.QUARTER_FINAL,
         team_a: shuffledTeams[i],
         team_b: shuffledTeams[i + 1],
-        championship: input.championship
+        championship,
+        realized: false
       }
 
       await this.bracketRepository.save(bracket)
 
     }
 
-    const round16List = await this.bracketRepository.getChampionship(input.championship.id, Round.ROUND_OF_16)
+    const quarterFinalList = await this.bracketRepository.getChampionship(championship.id, Round.QUARTER_FINAL)
 
     const drawMatchesOutputList: DrawMatchesOutput[] = []
 
-    for (const bracket of round16List) {
+    for (const bracket of quarterFinalList) {
 
       const matchups: DrawMatchesOutput = {
         round: bracket.round,
@@ -49,10 +71,6 @@ export class DrawMatchesUseCase implements UseCase {
 
     return drawMatchesOutputList
 
-  }
-
-  private shuffleArray(list: TeamModel[]) {
-    return list.sort(() => Math.random() - 0.5)
   }
 
 }

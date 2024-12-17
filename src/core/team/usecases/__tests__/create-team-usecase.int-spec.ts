@@ -30,6 +30,11 @@ describe('CreateTeamUseCase integration tests', () => {
 
     expect(result).toBeTruthy()
     expect(typeof result.id).toBe('string')
+    expect(typeof result.name).toBe('string')
+    expect(result).toHaveProperty('created_at')
+    expect(result).toHaveProperty('updated_at')
+    expect(result).toHaveProperty('name')
+    expect(result).toHaveProperty('id')
 
   })
 
