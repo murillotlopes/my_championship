@@ -2,8 +2,8 @@ import { Request } from 'express';
 import { Round16Output } from '../../../../../core/championship/model/round-16.output';
 import { DefineWinnerService } from '../../../../../core/shared/services/define-winner.service';
 import { GenerateMatchScoreService } from '../../../../../core/shared/services/generate-match-score.service';
-import { BracketRepositoryTypeORM } from '../../../../database/typeorm/repositorys/bracket-repository.typeorm';
-import { ChampionshipRepositoryTypeORM } from '../../../../database/typeorm/repositorys/championship-repository.typeorm';
+import { BracketRepositoryTypeORM } from '../../../../database/typeorm/repositories/bracket-repository.typeorm';
+import { ChampionshipRepositoryTypeORM } from '../../../../database/typeorm/repositories/championship-repository.typeorm';
 import { Controller } from '../../shared/controller';
 import { Round16ResultUseCase } from './../../../../../core/championship/usecases/round-16-result.usecase';
 

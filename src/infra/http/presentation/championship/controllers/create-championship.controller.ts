@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { ChampionshipModel } from '../../../../../core/championship/model/championship.model';
 import { CreateChampionshipUseCase } from '../../../../../core/championship/usecases/create-championshipt.usecase';
-import { ChampionshipRepositoryTypeORM } from '../../../../database/typeorm/repositorys/championship-repository.typeorm';
+import { ChampionshipRepositoryTypeORM } from '../../../../database/typeorm/repositories/championship-repository.typeorm';
 import { Controller } from '../../shared/controller';
 import { CreateChampionshipDto } from '../dtos/create-championship.dto';
 

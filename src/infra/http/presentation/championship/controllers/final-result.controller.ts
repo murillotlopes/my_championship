@@ -2,8 +2,8 @@ import { Request } from 'express';
 import { FinalOutput } from '../../../../../core/championship/model/final.output';
 import { FinalResultUseCase } from '../../../../../core/championship/usecases/final-result.usecase';
 import { GenerateMatchScoreService } from '../../../../../core/shared/services/generate-match-score.service';
-import { BracketRepositoryTypeORM } from '../../../../database/typeorm/repositorys/bracket-repository.typeorm';
-import { ChampionshipRepositoryTypeORM } from '../../../../database/typeorm/repositorys/championship-repository.typeorm';
+import { BracketRepositoryTypeORM } from '../../../../database/typeorm/repositories/bracket-repository.typeorm';
+import { ChampionshipRepositoryTypeORM } from '../../../../database/typeorm/repositories/championship-repository.typeorm';
 import { Controller } from '../../shared/controller';
 
 class FinalResultController extends Controller {

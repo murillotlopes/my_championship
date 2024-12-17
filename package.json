@@ -19,7 +19,7 @@
     "build": "tsc",
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:create": "npx dotenv-cli -e .env.development -- typeorm-ts-node-commonjs migration:create",
-    "migration:generate": "npx dotenv-cli -e .env.development -- typeorm-ts-node-commonjs -d ./src/infra/database/typeorm/data-source.ts migration:generate ./src/infra/database/type-orm/migrations/my_championship",
+    "migration:generate": "npx dotenv-cli -e .env.development -- typeorm-ts-node-commonjs -d ./src/infra/database/typeorm/data-source.ts migration:generate ./src/infra/database/typeorm/migrations/my_championship",
     "migration:run": "npx dotenv-cli -e .env.development -- typeorm-ts-node-commonjs migration:run -d ./src/infra/database/typeorm/data-source.ts",
     "migration:revert": "npx dotenv-cli -e .env.development -- typeorm-ts-node-commonjs migration:revert -d ./src/infra/database/typeorm/data-source.ts"
   },

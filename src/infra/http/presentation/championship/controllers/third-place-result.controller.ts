@@ -2,8 +2,8 @@ import { Request } from 'express';
 import { ThirdPlaceOutput } from '../../../../../core/championship/model/third-place.output';
 import { ThirdPlaceResultUseCase } from '../../../../../core/championship/usecases/third-place-result.usecase';
 import { GenerateMatchScoreService } from '../../../../../core/shared/services/generate-match-score.service';
-import { BracketRepositoryTypeORM } from '../../../../database/typeorm/repositorys/bracket-repository.typeorm';
-import { ChampionshipRepositoryTypeORM } from '../../../../database/typeorm/repositorys/championship-repository.typeorm';
+import { BracketRepositoryTypeORM } from '../../../../database/typeorm/repositories/bracket-repository.typeorm';
+import { ChampionshipRepositoryTypeORM } from '../../../../database/typeorm/repositories/championship-repository.typeorm';
 import { Controller } from '../../shared/controller';
 
 class ThirdPlaceResultController extends Controller {

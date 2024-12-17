@@ -1,8 +1,8 @@
 import { Request } from 'express';
 import { GeneralClassificationOutput } from '../../../../../core/championship/model/general-classification.output';
 import { DefineWinnerService } from '../../../../../core/shared/services/define-winner.service';
-import { BracketRepositoryTypeORM } from '../../../../database/typeorm/repositorys/bracket-repository.typeorm';
-import { ChampionshipRepositoryTypeORM } from '../../../../database/typeorm/repositorys/championship-repository.typeorm';
+import { BracketRepositoryTypeORM } from '../../../../database/typeorm/repositories/bracket-repository.typeorm';
+import { ChampionshipRepositoryTypeORM } from '../../../../database/typeorm/repositories/championship-repository.typeorm';
 import { Controller } from '../../shared/controller';
 import { ChampionshipRankingUseCase } from './../../../../../core/championship/usecases/championship-ranking.usecase';
 
