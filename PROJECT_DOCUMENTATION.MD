@@ -46,11 +46,47 @@ Foram modelados dois **diagramas entidade-relacionamento**:
    ```bash
    npm install
    ```
-2. Configure e execute o banco de dados:
+2. Configure e execute o banco de dados com docker:
+   - Um container de nome api-db será criado
+   - A porta está configurada para 5450
+   - Caso essa porte já esteja em uso, lembre-se de altera-la no arquivo docker-compose.yml
+   - Para criar o container, rode o comando abaixo:
    ```bash
-   docker compose up
+   docker compose up --build -d # -d para rodar sem segundo plano
    ```
-
+   - Se for preciso listar os container:
+   ```bash
+   docker ps # containers ativos
+   docker ps -a # containers inativos
+   ```
+   - Para parar o container:
+   ```bash
+   docker stop api-db
+   ```
+   - Se for necessário reiniciar a criação do container
+   ```bash
+   docker stop api-db # paralisa o container
+   docker rm api-db # remove o container
+   docker rm -f api-db # se ocorrer algum problema nos comandos acima, este força a remoção
+   ```
+3. A sincronização do banco não está ativa. Será preciso rodar manualmente as migrações:
+   - Caso tenha modificado a porta no docker-compose.yml ou prefira rodar localmente o banco postgres
+     - Não se esqueça de alterar o arquivo .env.development e .env.test
+     - Esses arquivos não foram incluidos no .gitignore para faciliar a inicializar da aplicação
+     - Será preciso criar o schema de testes no banco
+     ```sql
+     CREATE SCHEMA IF NOT EXISTS test
+     ```
+   ```bash
+   npm run migration:run
+   ```
+4. Execute a aplicação em modo de desenvolvimento
+   ```bash
+   npm run dev
+   ```
+5. A aplicação está disponivel para testes:
+   1. Pelo insominia
+   2. Pelo Swagger no endereço `http://localhost:4000`
 ---
 
 ## Scripts da Aplicação
@@ -60,7 +96,7 @@ Foram modelados dois **diagramas entidade-relacionamento**:
 - `npm run test:unit`: Executa apenas testes unitários.  
 - `npm run test:int`: Executa apenas testes de integração.  
 - `npm run test:e2e`: Executa apenas testes de ponta a ponta.  
-- `npm start`: Executa o código transpilado.
+- `npm start`: Executa os testes, transpila e sobe a aplicação.
 
 ---
 

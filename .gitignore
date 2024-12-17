@@ -4,8 +4,7 @@ build/
 tmp/
 temp/
 .env
-.env.development
-.env.test
 *lock.json
 dist
 coverage/
+.docker/

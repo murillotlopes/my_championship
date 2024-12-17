@@ -9,7 +9,6 @@ export const AppDataSource =
     schema,
     type: 'postgres',
     url: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false },
     synchronize: synchronize,
     entities: [path.join(__dirname, "/entities/**/*.{ts,js}")],
     migrations: [path.join(__dirname, "/migrations/**/*.{ts,js}")],
