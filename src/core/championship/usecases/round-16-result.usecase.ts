@@ -25,7 +25,7 @@ export class Round16ResultUseCase implements UseCase {
 
     const round16 = await this.bracketRepository.getChampionship(championship.id, Round.ROUND_OF_16)
 
-    if (round16.find(item => item.team_a_points)) throw new Error('Round of 16 already classified')
+    if (round16.find(item => item.realized)) throw new Error('Round of 16 already classified')
 
     for (const bracket of round16) {
 
@@ -33,6 +33,7 @@ export class Round16ResultUseCase implements UseCase {
 
       bracket.team_a_points = teamAscore
       bracket.team_b_points = teamBscore
+      bracket.realized = true
 
       await this.bracketRepository.update(bracket, bracket.id)
     }
@@ -49,7 +50,8 @@ export class Round16ResultUseCase implements UseCase {
         round: Round.QUARTER_FINAL,
         championship,
         team_a: teamA,
-        team_b: teamB
+        team_b: teamB,
+        realized: false
       }
 
       await this.bracketRepository.save(obj)
