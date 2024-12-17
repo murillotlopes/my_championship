@@ -27,7 +27,8 @@ export const createResultChampionshipMock = async (bracketRepository: BracketRep
       team_a: teamList[i],
       team_b: teamList[i + 1],
       team_a_points: sequencePoints[i],
-      team_b_points: sequencePoints[i + 1]
+      team_b_points: sequencePoints[i + 1],
+      realized: true
     }
     await bracketRepository.save(bracket)
   }
@@ -41,7 +42,8 @@ export const createResultChampionshipMock = async (bracketRepository: BracketRep
       team_a: sequenceSemiFinal[i],
       team_b: sequenceSemiFinal[i + 1],
       team_a_points: sequencePoints[i],
-      team_b_points: sequencePoints[i + 1]
+      team_b_points: sequencePoints[i + 1],
+      realized: true
     }
     await bracketRepository.save(bracket)
   }
@@ -52,7 +54,8 @@ export const createResultChampionshipMock = async (bracketRepository: BracketRep
     team_a: teamList[2],
     team_b: teamList[6],
     team_a_points: 0,
-    team_b_points: 0
+    team_b_points: 0,
+    realized: true
   }
   await bracketRepository.save(playoff)
 
@@ -62,7 +65,8 @@ export const createResultChampionshipMock = async (bracketRepository: BracketRep
     team_a: teamList[0],
     team_b: teamList[4],
     team_a_points: 5,
-    team_b_points: 5
+    team_b_points: 5,
+    realized: true
   }
   await bracketRepository.save(final)
 
