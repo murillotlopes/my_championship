@@ -104,11 +104,11 @@ export class ChampionshipRankingUseCase implements UseCase {
 
     fromFifthToEighth.sort((a, b) => {
 
-      if (a.total_score > b.total_score) return -1
-      if (b.total_score > a.total_score) return -1
+      if (b.total_score !== a.total_score) {
+        return b.total_score - a.total_score
+      }
 
-      if (new Date(a.team_registration_date).getTime() > new Date(b.team_registration_date).getTime()) return -1
-      else return 1
+      return new Date(b.team_registration_date).getTime() - new Date(a.team_registration_date).getTime()
 
     })
 
