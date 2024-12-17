@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { TeamModel } from '../../../../../core/team/model/team.model';
 import { CreateTeamUseCase } from '../../../../../core/team/usecases/create-team.usecase';
-import { TeamRepositoryTypeORM } from '../../../../database/typeorm/repositorys/team-repository.typeorm';
+import { TeamRepositoryTypeORM } from '../../../../database/typeorm/repositories/team-repository.typeorm';
 import { Controller } from '../../shared/controller';
 import { CreateTeamDto } from '../dtos/create-team.dto';
 

@@ -1,9 +1,9 @@
 import { Request } from 'express';
 import { DrawMatchesInput } from '../../../../../core/bracket/model/draw-matches.input';
 import { ShuffleArray } from '../../../../../core/shared/services/shuffle-array.service';
-import { BracketRepositoryTypeORM } from '../../../../database/typeorm/repositorys/bracket-repository.typeorm';
-import { ChampionshipRepositoryTypeORM } from '../../../../database/typeorm/repositorys/championship-repository.typeorm';
-import { TeamRepositoryTypeORM } from '../../../../database/typeorm/repositorys/team-repository.typeorm';
+import { BracketRepositoryTypeORM } from '../../../../database/typeorm/repositories/bracket-repository.typeorm';
+import { ChampionshipRepositoryTypeORM } from '../../../../database/typeorm/repositories/championship-repository.typeorm';
+import { TeamRepositoryTypeORM } from '../../../../database/typeorm/repositories/team-repository.typeorm';
 import { Controller } from '../../shared/controller';
 import { DrawMatchesInputDto } from '../dtos/draw-matches-input.dto';
 import { DrawMatchesOutput } from './../../../../../core/bracket/model/draw-matches.output';

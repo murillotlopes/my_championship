@@ -4,8 +4,8 @@ import { QuarterFinalResultUseCase } from '../../../../../core/championship/usec
 import { DefineWinnerService } from '../../../../../core/shared/services/define-winner.service';
 import { GenerateMatchScoreService } from '../../../../../core/shared/services/generate-match-score.service';
 import { ShuffleArray } from '../../../../../core/shared/services/shuffle-array.service';
-import { BracketRepositoryTypeORM } from '../../../../database/typeorm/repositorys/bracket-repository.typeorm';
-import { ChampionshipRepositoryTypeORM } from '../../../../database/typeorm/repositorys/championship-repository.typeorm';
+import { BracketRepositoryTypeORM } from '../../../../database/typeorm/repositories/bracket-repository.typeorm';
+import { ChampionshipRepositoryTypeORM } from '../../../../database/typeorm/repositories/championship-repository.typeorm';
 import { Controller } from '../../shared/controller';
 
 class QuarterFinalResultController extends Controller {
