@@ -2,8 +2,8 @@ import { Request } from 'express';
 import { FinalOutput } from '../../../../../core/championship/model/final.output';
 import { FinalResultUseCase } from '../../../../../core/championship/usecases/final-result.usecase';
 import { GenerateMatchScoreService } from '../../../../../core/shared/services/generate-match-score.service';
-import { BracketRepositoryInMemory } from '../../../../database/in-memory/bracket-repository.in-memory';
-import { ChampionshipRepositoryInMemory } from '../../../../database/in-memory/championship-repository.in-memory';
+import { BracketRepositoryTypeORM } from '../../../../database/typeorm/repositorys/bracket-repository.typeorm';
+import { ChampionshipRepositoryTypeORM } from '../../../../database/typeorm/repositorys/championship-repository.typeorm';
 import { Controller } from '../../shared/controller';
 
 class FinalResultController extends Controller {
@@ -25,8 +25,8 @@ class FinalResultController extends Controller {
 
 }
 
-const championshipRepository = new ChampionshipRepositoryInMemory()
-const bracketRepository = new BracketRepositoryInMemory()
+const championshipRepository = new ChampionshipRepositoryTypeORM()
+const bracketRepository = new BracketRepositoryTypeORM()
 const generateMatchScoreService = new GenerateMatchScoreService()
 const finalResultUseCase = new FinalResultUseCase(championshipRepository, bracketRepository, generateMatchScoreService)
 

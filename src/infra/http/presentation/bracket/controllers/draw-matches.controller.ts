@@ -1,9 +1,9 @@
 import { Request } from 'express';
 import { DrawMatchesInput } from '../../../../../core/bracket/model/draw-matches.input';
 import { ShuffleArray } from '../../../../../core/shared/services/shuffle-array.service';
-import { BracketRepositoryInMemory } from '../../../../database/in-memory/bracket-repository.in-memory';
-import { ChampionshipRepositoryInMemory } from '../../../../database/in-memory/championship-repository.in-memory';
-import TeamRepositoryInMemory from '../../../../database/in-memory/team-repository.in-memory';
+import { BracketRepositoryTypeORM } from '../../../../database/typeorm/repositorys/bracket-repository.typeorm';
+import { ChampionshipRepositoryTypeORM } from '../../../../database/typeorm/repositorys/championship-repository.typeorm';
+import { TeamRepositoryTypeORM } from '../../../../database/typeorm/repositorys/team-repository.typeorm';
 import { Controller } from '../../shared/controller';
 import { DrawMatchesInputDto } from '../dtos/draw-matches-input.dto';
 import { DrawMatchesOutput } from './../../../../../core/bracket/model/draw-matches.output';
@@ -35,10 +35,10 @@ class DrawMatchesController extends Controller {
 
 }
 
-const bracketRepositoryInMemory = new BracketRepositoryInMemory()
-const championshipRepository = new ChampionshipRepositoryInMemory()
-const teamRepository = new TeamRepositoryInMemory()
+const bracketRepository = new BracketRepositoryTypeORM()
+const championshipRepository = new ChampionshipRepositoryTypeORM()
+const teamRepository = new TeamRepositoryTypeORM()
 const shuffleArray = new ShuffleArray()
-const drawMatchesUseCase = new DrawMatchesUseCase(bracketRepositoryInMemory, championshipRepository, teamRepository, shuffleArray)
+const drawMatchesUseCase = new DrawMatchesUseCase(bracketRepository, championshipRepository, teamRepository, shuffleArray)
 
 export default new DrawMatchesController(drawMatchesUseCase, DrawMatchesInputDto)

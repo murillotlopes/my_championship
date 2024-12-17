@@ -3,8 +3,9 @@ import { QuarterFinalOutput } from '../../../../../core/championship/model/quart
 import { QuarterFinalResultUseCase } from '../../../../../core/championship/usecases/quarter-final-result.usecase';
 import { DefineWinnerService } from '../../../../../core/shared/services/define-winner.service';
 import { GenerateMatchScoreService } from '../../../../../core/shared/services/generate-match-score.service';
-import { BracketRepositoryInMemory } from '../../../../database/in-memory/bracket-repository.in-memory';
-import { ChampionshipRepositoryInMemory } from '../../../../database/in-memory/championship-repository.in-memory';
+import { ShuffleArray } from '../../../../../core/shared/services/shuffle-array.service';
+import { BracketRepositoryTypeORM } from '../../../../database/typeorm/repositorys/bracket-repository.typeorm';
+import { ChampionshipRepositoryTypeORM } from '../../../../database/typeorm/repositorys/championship-repository.typeorm';
 import { Controller } from '../../shared/controller';
 
 class QuarterFinalResultController extends Controller {
@@ -25,10 +26,11 @@ class QuarterFinalResultController extends Controller {
 
 }
 
-const championshipRepository = new ChampionshipRepositoryInMemory()
-const bracketRepository = new BracketRepositoryInMemory()
+const championshipRepository = new ChampionshipRepositoryTypeORM()
+const bracketRepository = new BracketRepositoryTypeORM()
 const defineWinnerService = new DefineWinnerService(bracketRepository)
 const generateMatchScoreService = new GenerateMatchScoreService()
-const quarterFinalResultUseCase = new QuarterFinalResultUseCase(championshipRepository, bracketRepository, defineWinnerService, generateMatchScoreService)
+const shuffleArray = new ShuffleArray()
+const quarterFinalResultUseCase = new QuarterFinalResultUseCase(championshipRepository, bracketRepository, defineWinnerService, generateMatchScoreService, shuffleArray)
 
 export default new QuarterFinalResultController(quarterFinalResultUseCase)

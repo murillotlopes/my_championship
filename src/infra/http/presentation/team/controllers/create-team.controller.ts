@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { TeamModel } from '../../../../../core/team/model/team.model';
 import { CreateTeamUseCase } from '../../../../../core/team/usecases/create-team.usecase';
-import TeamRepositoryInMemory from '../../../../database/in-memory/team-repository.in-memory';
+import { TeamRepositoryTypeORM } from '../../../../database/typeorm/repositorys/team-repository.typeorm';
 import { Controller } from '../../shared/controller';
 import { CreateTeamDto } from '../dtos/create-team.dto';
 
@@ -24,7 +24,7 @@ class CreateTeamController extends Controller {
 
 }
 
-const teamRepositoryInMemory = new TeamRepositoryInMemory()
-const createTeamUseCase = new CreateTeamUseCase(teamRepositoryInMemory)
+const teamRepository = new TeamRepositoryTypeORM()
+const createTeamUseCase = new CreateTeamUseCase(teamRepository)
 
 export default new CreateTeamController(createTeamUseCase, CreateTeamDto)
