@@ -13,8 +13,8 @@ export class BracketRepositoryTypeORM extends RepositoryTypeORM<BracketEntity> i
 
     try {
 
-      if (round) return this.repository.find({ where: { round, id: championshipId } })
-      return this.repository.find({ where: { id: championshipId } })
+      if (round) return this.repository.find({ where: { round, championship: { id: championshipId } } })
+      return this.repository.find({ where: { championship: { id: championshipId } } })
 
     } catch (error) {
       throw error
