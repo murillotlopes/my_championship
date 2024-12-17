@@ -1,12 +1,14 @@
 import { BracketModel } from '../../core/bracket/model/bracket.model'
 import { Round } from '../../core/bracket/model/round.enum'
-import { BracketRepositoryInMemory } from '../../infra/database/in-memory/bracket-repository.in-memory'
-import { ChampionshipRepositoryInMemory } from '../../infra/database/in-memory/championship-repository.in-memory'
-import TeamRepositoryInMemory from '../../infra/database/in-memory/team-repository.in-memory'
+import { BracketRepositoryProvider } from '../../core/bracket/repository/bracket-repository.provider'
+import { ChampionshipModel } from '../../core/championship/model/championship.model'
+import { ChampionshipRepositoryProvider } from '../../core/championship/repository/championship-repository.provider'
+import { TeamModel } from '../../core/team/model/team.model'
+import { TeamRepositoryProvider } from '../../core/team/repository/team-repository.provider'
 import { createChampionshipMock } from './championship.mock'
 import { createTeamMock } from './team.mock'
 
-export const createResultChampionshipMock = async (bracketRepository: BracketRepositoryInMemory, championshipRepository: ChampionshipRepositoryInMemory, teamRepository: TeamRepositoryInMemory) => {
+export const createResultChampionshipMock = async (bracketRepository: BracketRepositoryProvider<BracketModel>, championshipRepository: ChampionshipRepositoryProvider<ChampionshipModel>, teamRepository: TeamRepositoryProvider<TeamModel>) => {
 
   let championshipMock = createChampionshipMock()
   let teamList = []
