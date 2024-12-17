@@ -31,6 +31,7 @@ export class ThirdPlaceResultUseCase implements UseCase {
 
     third_place.team_a_points = teamAscore
     third_place.team_b_points = teamBscore
+    third_place.realized = true
 
     await this.bracketRepository.update(third_place, third_place.id)
 

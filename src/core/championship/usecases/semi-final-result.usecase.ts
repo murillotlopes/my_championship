@@ -29,7 +29,7 @@ export class SemiFinalResultUseCase implements UseCase {
 
     const semi_final = await this.bracketRepository.getChampionship(championship.id, Round.SEMI_FINAL)
 
-    if (semi_final.find(item => item.realized)) throw new Error('Quarter final already classified')
+    if (semi_final.find(item => item.realized)) throw new Error('Semi final already classified')
 
     for (const bracket of semi_final) {
 
@@ -37,6 +37,7 @@ export class SemiFinalResultUseCase implements UseCase {
 
       bracket.team_a_points = teamAscore
       bracket.team_b_points = teamBscore
+      bracket.realized = true
 
       await this.bracketRepository.update(bracket, bracket.id)
     }
@@ -57,7 +58,7 @@ export class SemiFinalResultUseCase implements UseCase {
     const shuffledWinners = this.shuffleArray.shuffle(semiFinalWinners)
     const shuffledLoser = this.shuffleArray.shuffle(semiFinalLoser)
 
-    for (let i = 0; shuffledWinners.length; i += 2) {
+    for (let i = 0; i < shuffledWinners.length; i += 2) {
 
       const matchFinal: BracketModel = {
         round: Round.FINAL,
@@ -85,6 +86,7 @@ export class SemiFinalResultUseCase implements UseCase {
     const final = await this.bracketRepository.getChampionship(championship.id, Round.FINAL)
 
     const semiFinalOutput: SemiFinalOutput = {
+      semi_final,
       final: final[0],
       third_place_playoff: third_place_playoff[0]
     }

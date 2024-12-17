@@ -31,6 +31,7 @@ export class FinalResultUseCase implements UseCase {
 
     final.team_a_points = teamAscore
     final.team_b_points = teamBscore
+    final.realized = true
 
     await this.bracketRepository.update(final, final.id)
 
