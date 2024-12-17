@@ -15,6 +15,9 @@ export abstract class RepositoryTypeORM<M extends BaseEntity> implements IReposi
 
     try {
 
+      let ent = new this.entity()
+      data = Object.assign(ent, data)
+
       return await this.repository.save(data)
 
     } catch (error) {

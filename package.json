@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node --env-file=.env dist/src/server.js",
-    "dev": "tsx watch --env-file=.env src/server.ts",
+    "dev": "tsx watch --env-file=.env.development src/server.ts",
     "test": "npx dotenv-cli -e .env.test -- jest",
     "test:w": "npx dotenv-cli -e .env.test -- jest --watch",
     "test:unit": "npx dotenv-cli -e .env.test -- jest --config ./jest.unit.config.js",

@@ -1,10 +1,10 @@
 import { Request } from 'express';
 import { GeneralClassificationOutput } from '../../../../../core/championship/model/general-classification.output';
 import { DefineWinnerService } from '../../../../../core/shared/services/define-winner.service';
+import { BracketRepositoryTypeORM } from '../../../../database/typeorm/repositorys/bracket-repository.typeorm';
+import { ChampionshipRepositoryTypeORM } from '../../../../database/typeorm/repositorys/championship-repository.typeorm';
 import { Controller } from '../../shared/controller';
 import { ChampionshipRankingUseCase } from './../../../../../core/championship/usecases/championship-ranking.usecase';
-import { BracketRepositoryInMemory } from './../../../../database/in-memory/bracket-repository.in-memory';
-import { ChampionshipRepositoryInMemory } from './../../../../database/in-memory/championship-repository.in-memory';
 
 class ChampionshipRankingController extends Controller {
 
@@ -24,8 +24,8 @@ class ChampionshipRankingController extends Controller {
 
 }
 
-const championshipRepository = new ChampionshipRepositoryInMemory()
-const bracketRepository = new BracketRepositoryInMemory()
+const championshipRepository = new ChampionshipRepositoryTypeORM()
+const bracketRepository = new BracketRepositoryTypeORM()
 const defineWinnerService = new DefineWinnerService(bracketRepository)
 const championshipRankingUseCase = new ChampionshipRankingUseCase(championshipRepository, bracketRepository, defineWinnerService)
 

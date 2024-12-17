@@ -79,6 +79,7 @@ describe('SemiFinalResultUseCase integration tests', () => {
     const result = await sut.execute(championship.id as string)
 
     expect(result).toBeTruthy()
+    expect(result).toHaveProperty('semi_final')
     expect(result).toHaveProperty('third_place_playoff')
     expect(result).toHaveProperty('final')
 
@@ -108,7 +109,7 @@ describe('SemiFinalResultUseCase integration tests', () => {
       await sut.execute(championship.id as string)
     } catch (error: any) {
       expect(error).toBeInstanceOf(Error)
-      expect(error['message']).toBe('Quarter final already classified')
+      expect(error['message']).toBe('Semi final already classified')
     }
 
   })

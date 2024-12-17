@@ -2,8 +2,8 @@ import { Request } from 'express';
 import { Round16Output } from '../../../../../core/championship/model/round-16.output';
 import { DefineWinnerService } from '../../../../../core/shared/services/define-winner.service';
 import { GenerateMatchScoreService } from '../../../../../core/shared/services/generate-match-score.service';
-import { BracketRepositoryInMemory } from '../../../../database/in-memory/bracket-repository.in-memory';
-import { ChampionshipRepositoryInMemory } from '../../../../database/in-memory/championship-repository.in-memory';
+import { BracketRepositoryTypeORM } from '../../../../database/typeorm/repositorys/bracket-repository.typeorm';
+import { ChampionshipRepositoryTypeORM } from '../../../../database/typeorm/repositorys/championship-repository.typeorm';
 import { Controller } from '../../shared/controller';
 import { Round16ResultUseCase } from './../../../../../core/championship/usecases/round-16-result.usecase';
 
@@ -25,8 +25,8 @@ class Round16ResultController extends Controller {
 
 }
 
-const championshipRepository = new ChampionshipRepositoryInMemory()
-const bracketRepository = new BracketRepositoryInMemory()
+const championshipRepository = new ChampionshipRepositoryTypeORM()
+const bracketRepository = new BracketRepositoryTypeORM()
 const defineWinnerService = new DefineWinnerService(bracketRepository)
 const generateMatchScoreService = new GenerateMatchScoreService()
 const round16ResultUseCase = new Round16ResultUseCase(championshipRepository, bracketRepository, defineWinnerService, generateMatchScoreService)
