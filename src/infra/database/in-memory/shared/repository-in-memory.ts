@@ -36,7 +36,7 @@ export abstract class RepositoryInMemory<M extends BaseModel> implements Reposit
 
     const idx = this.list.findIndex(item => item.id === id)
 
-    if (!idx) return
+    if (idx < 0) return
 
     const oldData = this.list[idx]
 
