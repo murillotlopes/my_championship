@@ -16,7 +16,7 @@ class TeamRouter extends Route {
   public registerRoute(): Router {
 
     this.router.post('/', createTeamController.init.bind(this))
-    this.router.post('/:teamId', editTeamController.init.bind(this))
+    this.router.patch('/:teamId', editTeamController.init.bind(this))
     this.router.get('/', retriveTeamController.init.bind(this))
     this.router.get('/:teamId', retriveOneTeamController.init.bind(this))
     this.router.delete('/:teamId', deleteTeamController.init.bind(this))
