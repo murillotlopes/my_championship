@@ -17,7 +17,7 @@ class EditChampionshipController extends Controller {
 
   protected execute = async (req: Request): Promise<ChampionshipModel> => {
 
-    const championshipId = req.params.id
+    const championshipId = req.params.championshipId
     const body = req.body
 
     body.id = championshipId
