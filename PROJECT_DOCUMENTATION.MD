@@ -96,6 +96,7 @@ Foram modelados dois **diagramas entidade-relacionamento**:
 - `npm run test:unit`: Executa apenas testes unitários.  
 - `npm run test:int`: Executa apenas testes de integração.  
 - `npm run test:e2e`: Executa apenas testes de ponta a ponta.  
+- `npm run test:cov`: Executa e mostra a cobertura dos testes.
 - `npm start`: Executa os testes, transpila e sobe a aplicação.
 
 ---

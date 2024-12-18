@@ -4,5 +4,15 @@ module.exports = {
   transform: {
     "^.+.tsx?$": ["ts-jest", {}],
   },
-  testRegex: '.*\\..*spec\\.ts'
+  testRegex: '.*\\..*spec\\.ts',
+  watchPathIgnorePatterns: [
+    "<rootDir>/node_modules/",
+    "<rootDir>/dist/",
+    "<rootDir>/.docker/"
+  ],
+  testPathIgnorePatterns: [
+    "<rootDir>/node_modules/",
+    "<rootDir>/dist/",
+    "<rootDir>/.docker/"
+  ],
 };
