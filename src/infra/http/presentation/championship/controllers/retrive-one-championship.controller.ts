@@ -7,7 +7,7 @@ import { Controller } from '../../shared/controller';
 class RetriveOneChampionshipController extends Controller {
 
   constructor(
-    private readonly editChampionshipUseCase: RetriveOneChampionshipUseCase,
+    private readonly retriveOneChampionshipUseCase: RetriveOneChampionshipUseCase,
   ) {
     super()
   }
@@ -16,13 +16,13 @@ class RetriveOneChampionshipController extends Controller {
 
     const championshipId = req.params.championshipId
 
-    return this.editChampionshipUseCase.execute(championshipId)
+    return this.retriveOneChampionshipUseCase.execute(championshipId)
 
   }
 
 }
 
 const championshipRepository = new ChampionshipRepositoryTypeORM()
-const editChampionshipUseCase = new RetriveOneChampionshipUseCase(championshipRepository)
+const retriveOneChampionshipUseCase = new RetriveOneChampionshipUseCase(championshipRepository)
 
-export default new RetriveOneChampionshipController(editChampionshipUseCase)
+export default new RetriveOneChampionshipController(retriveOneChampionshipUseCase)
