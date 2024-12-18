@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { Route } from '../../shared/route'
 import createTeamController from '../controllers/create-team.controller'
+import deleteTeamController from '../controllers/delete-team.controller'
 import editTeamController from '../controllers/edit-team.controller'
 import retriveOneTeamController from '../controllers/retrive-one-team.controller'
 import retriveTeamController from '../controllers/retrive-team.controller'
@@ -18,6 +19,7 @@ class TeamRouter extends Route {
     this.router.post('/:teamId', editTeamController.init.bind(this))
     this.router.get('/', retriveTeamController.init.bind(this))
     this.router.get('/:teamId', retriveOneTeamController.init.bind(this))
+    this.router.delete('/:teamId', deleteTeamController.init.bind(this))
 
     return this.router
   }
