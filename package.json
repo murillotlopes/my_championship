@@ -21,7 +21,8 @@
     "migration:create": "npx dotenv-cli -e .env.development -- typeorm-ts-node-commonjs migration:create",
     "migration:generate": "npx dotenv-cli -e .env.development -- typeorm-ts-node-commonjs -d ./src/infra/database/typeorm/data-source.ts migration:generate ./src/infra/database/typeorm/migrations/my_championship",
     "migration:run": "npx dotenv-cli -e .env.development -- typeorm-ts-node-commonjs migration:run -d ./src/infra/database/typeorm/data-source.ts",
-    "migration:revert": "npx dotenv-cli -e .env.development -- typeorm-ts-node-commonjs migration:revert -d ./src/infra/database/typeorm/data-source.ts"
+    "migration:revert": "npx dotenv-cli -e .env.development -- typeorm-ts-node-commonjs migration:revert -d ./src/infra/database/typeorm/data-source.ts",
+    "swagger:generate": "npx dotenv-cli -e .env.development -- ts-node ./src/swagger/swagger.config.ts"
   },
   "repository": {
     "type": "git",
@@ -51,6 +52,8 @@
     "ksuid": "^3.0.0",
     "pg": "^8.4.0",
     "reflect-metadata": "^0.1.13",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "typeorm": "0.3.20"
   },
   "devDependencies": {
@@ -59,11 +62,14 @@
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.2",
     "@types/supertest": "^6.0.2",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.7",
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
     "dotenv-cli": "^7.4.4",
     "jest": "^29.7.0",
     "supertest": "^7.0.0",
+    "swagger-autogen": "^2.23.7",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
