@@ -1,6 +1,8 @@
 import { BracketModel } from '../../bracket/model/bracket.model';
 import { Round } from '../../bracket/model/round.enum';
 import { BracketRepositoryProvider } from '../../bracket/repository/bracket-repository.provider';
+import { ForbiddenException } from '../../shared/errs/forbidden-exception';
+import { NotFoundException } from '../../shared/errs/not-found-exception';
 import { UseCase } from '../../shared/providers/usecase';
 import { GenerateMatchScoreService } from '../../shared/services/generate-match-score.service';
 import { ChampionshipModel } from '../model/championship.model';
@@ -19,11 +21,11 @@ export class FinalResultUseCase implements UseCase {
 
     const championship = await this.championshipRepository.getById(input)
 
-    if (!championship) throw new Error('Championship not found')
+    if (!championship) throw new NotFoundException('Championship not found')
 
     const finalBracket = await this.bracketRepository.getChampionship(championship.id, Round.FINAL)
 
-    if (finalBracket.find(item => item.team_a_points)) throw new Error('Final already classified')
+    if (finalBracket.find(item => item.realized)) throw new ForbiddenException('Final already classified')
 
     const final = finalBracket[0]
 

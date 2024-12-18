@@ -1,4 +1,5 @@
 import TeamRepositoryInMemory from '../../../../infra/database/in-memory/team-repository.in-memory'
+import { NotFoundException } from '../../../shared/errs/not-found-exception'
 import { EditTeamUseCase } from '../edit-team.usecase'
 
 describe('EditTeamUseCase integration tests', () => {
@@ -41,8 +42,8 @@ describe('EditTeamUseCase integration tests', () => {
     try {
       await sut.execute(objt)
     } catch (error) {
-      expect(error).toBeInstanceOf(Error)
-      expect(error.message).toBe('Resource not found')
+      expect(error).toBeInstanceOf(NotFoundException)
+      expect(error.message).toBe('Team not found')
     }
 
   })

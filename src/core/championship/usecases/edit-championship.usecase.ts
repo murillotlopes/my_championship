@@ -1,3 +1,4 @@
+import { NotFoundException } from '../../shared/errs/not-found-exception';
 import { UseCase } from '../../shared/providers/usecase';
 import { ChampionshipModel } from '../model/championship.model';
 import { ChampionshipRepositoryProvider } from './../repository/championship-repository.provider';
@@ -12,7 +13,7 @@ export class EditChampionshipUseCase implements UseCase {
 
     const championship = await this.championshipRepository.getById(input.id)
 
-    if (!championship) throw new Error('Resource not found')
+    if (!championship) throw new NotFoundException('Championship not found')
 
     return this.championshipRepository.update(input, input.id as string)
 

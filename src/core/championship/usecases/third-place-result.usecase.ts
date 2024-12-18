@@ -1,6 +1,8 @@
 import { BracketModel } from '../../bracket/model/bracket.model';
 import { Round } from '../../bracket/model/round.enum';
 import { BracketRepositoryProvider } from '../../bracket/repository/bracket-repository.provider';
+import { ForbiddenException } from '../../shared/errs/forbidden-exception';
+import { NotFoundException } from '../../shared/errs/not-found-exception';
 import { UseCase } from '../../shared/providers/usecase';
 import { GenerateMatchScoreService } from '../../shared/services/generate-match-score.service';
 import { ChampionshipModel } from '../model/championship.model';
@@ -19,11 +21,11 @@ export class ThirdPlaceResultUseCase implements UseCase {
 
     const championship = await this.championshipRepository.getById(input)
 
-    if (!championship) throw new Error('Championship not found')
+    if (!championship) throw new NotFoundException('Championship not found')
 
     const third_place_playoff = await this.bracketRepository.getChampionship(championship.id, Round.THIRD_PLACE_PLAYOFF)
 
-    if (third_place_playoff.find(item => item.realized)) throw new Error('Third Place Playoff already classified')
+    if (third_place_playoff.find(item => item.realized)) throw new ForbiddenException('Third Place Playoff already classified')
 
     const third_place = third_place_playoff[0]
 

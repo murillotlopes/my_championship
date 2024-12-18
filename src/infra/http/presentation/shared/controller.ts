@@ -1,6 +1,9 @@
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
 import { Request, Response } from 'express';
+import { ForbiddenException } from '../../../../core/shared/errs/forbidden-exception';
+import { NotFoundException } from '../../../../core/shared/errs/not-found-exception';
+import { UnprocessableEntityException } from '../../../../core/shared/errs/unprocessable-entity-exception';
 import { BaseModel } from '../../../../core/shared/model/base.model';
 import { ExtractedError } from '../../../../core/shared/types/extracted-error.type';
 import { extractErrorClassValidator } from '../../../adapters/extract-error-class-validator';
@@ -21,13 +24,10 @@ export abstract class Controller {
 
       res.json(result)
 
-    } catch (error: any) {
+    } catch (error) {
+      const err = this.getError(error)
 
-      //TODO: criar um gerenciador de erro que devolva o status correto e valide se erro.message é objeto e transforma-lo
-      res.status(400).json({
-        msg: 'failed to process your request',
-        error: error['message']
-      })
+      res.status(err.statusCode).json(err)
 
     }
 
@@ -50,8 +50,26 @@ export abstract class Controller {
 
       errorExtracted = { ...errorExtracted, ...extractErrorClassValidator(erros) }
 
-      throw new Error(errorExtracted as any)
+      throw new UnprocessableEntityException('Invalid payload', errorExtracted)
     }
+
+  }
+
+  private getError(error: Error): { message: string, statusCode: number, error?: any } {
+
+    if (error instanceof NotFoundException) {
+      return { message: error.message, error: error.error, statusCode: error.statusCode }
+    }
+
+    if (error instanceof ForbiddenException) {
+      return { message: error.message, error: error.error, statusCode: error.statusCode }
+    }
+
+    if (error instanceof UnprocessableEntityException) {
+      return { message: error.message, error: error.error, statusCode: error.statusCode }
+    }
+
+    return { message: error.message, statusCode: 400 }
 
   }
 

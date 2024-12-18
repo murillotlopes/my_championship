@@ -1,4 +1,5 @@
 import { ChampionshipRepositoryInMemory } from '../../../../infra/database/in-memory/championship-repository.in-memory'
+import { NotFoundException } from '../../../shared/errs/not-found-exception'
 import { Repository } from '../../../shared/providers/repository'
 import { ChampionshipModel } from '../../model/championship.model'
 import { EditChampionshipUseCase } from '../edit-championship.usecase'
@@ -43,8 +44,8 @@ describe('EditChampionshipUseCase integration tests', () => {
     try {
       await sut.execute(objt)
     } catch (error) {
-      expect(error).toBeInstanceOf(Error)
-      expect(error.message).toBe('Resource not found')
+      expect(error).toBeInstanceOf(NotFoundException)
+      expect(error.message).toBe('Championship not found')
     }
 
   })

@@ -1,5 +1,7 @@
 import { ChampionshipModel } from '../../championship/model/championship.model';
 import { ChampionshipRepositoryProvider } from '../../championship/repository/championship-repository.provider';
+import { ForbiddenException } from '../../shared/errs/forbidden-exception';
+import { NotFoundException } from '../../shared/errs/not-found-exception';
 import { UseCase } from '../../shared/providers/usecase';
 import { ShuffleArray } from '../../shared/services/shuffle-array.service';
 import { TeamModel } from '../../team/model/team.model';
@@ -25,15 +27,18 @@ export class DrawMatchesUseCase implements UseCase {
 
     const championship = await this.championshipRepository.getById(input.championshipId)
 
-    if (!championship) throw new Error('Championship not found')
+    if (!championship) throw new NotFoundException('Championship not found')
 
     const quarterDrawn = await this.bracketRepository.getChampionship(input.championshipId, Round.QUARTER_FINAL)
 
-    if (quarterDrawn.length) throw new Error('The championship has already been drawn')
+    if (quarterDrawn.length) throw new ForbiddenException('The championship has already been drawn')
 
     const teamsList: TeamModel[] = []
     for (const id of input.teams) {
       const team = await this.teamRepository.getById(id) as TeamModel
+
+      if (!team) throw new NotFoundException('Team not found')
+
       teamsList.push(team)
     }
 

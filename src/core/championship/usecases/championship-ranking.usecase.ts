@@ -1,6 +1,8 @@
 import { BracketModel } from '../../bracket/model/bracket.model';
 import { Round } from '../../bracket/model/round.enum';
 import { BracketRepositoryProvider } from '../../bracket/repository/bracket-repository.provider';
+import { ForbiddenException } from '../../shared/errs/forbidden-exception';
+import { NotFoundException } from '../../shared/errs/not-found-exception';
 import { UseCase } from '../../shared/providers/usecase';
 import { DefineWinnerService } from '../../shared/services/define-winner.service';
 import { ChampionshipModel } from '../model/championship.model';
@@ -22,12 +24,12 @@ export class ChampionshipRankingUseCase implements UseCase {
     // verificar se o campeonato existe
     const championship = await this.championshipRepository.getById(input)
 
-    if (!championship) throw new Error('Championship not found')
+    if (!championship) throw new NotFoundException('Championship not found')
 
     // se o campeonato foi finalizado
     const finalList = await this.bracketRepository.getChampionship(championship.id, Round.FINAL)
 
-    if (finalList.find(item => !item.realized)) throw new Error('The championship has not been finalized')
+    if (finalList.find(item => !item.realized)) throw new ForbiddenException('The championship has not been finalized')
 
     const generalClassification: GeneralClassificationOutput = {
       championship,

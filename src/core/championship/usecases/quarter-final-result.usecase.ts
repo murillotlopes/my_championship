@@ -1,6 +1,8 @@
 import { BracketModel } from '../../bracket/model/bracket.model';
 import { Round } from '../../bracket/model/round.enum';
 import { BracketRepositoryProvider } from '../../bracket/repository/bracket-repository.provider';
+import { ForbiddenException } from '../../shared/errs/forbidden-exception';
+import { NotFoundException } from '../../shared/errs/not-found-exception';
 import { UseCase } from '../../shared/providers/usecase';
 import { DefineWinnerService } from '../../shared/services/define-winner.service';
 import { GenerateMatchScoreService } from '../../shared/services/generate-match-score.service';
@@ -24,11 +26,11 @@ export class QuarterFinalResultUseCase implements UseCase {
 
     const championship = await this.championshipRepository.getById(input)
 
-    if (!championship) throw new Error('Championship not found')
+    if (!championship) throw new NotFoundException('Championship not found')
 
     const quarter_final = await this.bracketRepository.getChampionship(championship.id, Round.QUARTER_FINAL)
 
-    if (quarter_final.find(item => item.realized)) throw new Error('Quarter final already classified')
+    if (quarter_final.find(item => item.realized)) throw new ForbiddenException('Quarter final already classified')
 
     for (const bracket of quarter_final) {
 

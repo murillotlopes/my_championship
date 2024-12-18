@@ -2,6 +2,8 @@ import { BracketRepositoryInMemory } from '../../../../infra/database/in-memory/
 import { ChampionshipRepositoryInMemory } from '../../../../infra/database/in-memory/championship-repository.in-memory'
 import TeamRepositoryInMemory from '../../../../infra/database/in-memory/team-repository.in-memory'
 import { createResultChampionshipMock } from '../../../../mocks/__tests__/create-result-championship.mock'
+import { ForbiddenException } from '../../../shared/errs/forbidden-exception'
+import { NotFoundException } from '../../../shared/errs/not-found-exception'
 import { DeleteChampionshipUseCase } from '../delete-championship.usecase'
 
 describe('EditChampionshipUseCase integration tests', () => {
@@ -51,7 +53,7 @@ describe('EditChampionshipUseCase integration tests', () => {
     try {
       await sut.execute(championshipSaved.id)
     } catch (error) {
-      expect(error).toBeInstanceOf(Error)
+      expect(error).toBeInstanceOf(ForbiddenException)
       expect(error.message).toBe('The championship has registered matches and cannot be deleted')
     }
 
@@ -62,8 +64,8 @@ describe('EditChampionshipUseCase integration tests', () => {
     try {
       await sut.execute('fake id')
     } catch (error) {
-      expect(error).toBeInstanceOf(Error)
-      expect(error.message).toBe('Resource not found')
+      expect(error).toBeInstanceOf(NotFoundException)
+      expect(error.message).toBe('Championship not found')
     }
 
   })

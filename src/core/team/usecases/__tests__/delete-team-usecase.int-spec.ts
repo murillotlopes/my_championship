@@ -2,6 +2,8 @@ import { BracketRepositoryInMemory } from '../../../../infra/database/in-memory/
 import { ChampionshipRepositoryInMemory } from '../../../../infra/database/in-memory/championship-repository.in-memory'
 import TeamRepositoryInMemory from '../../../../infra/database/in-memory/team-repository.in-memory'
 import { createResultChampionshipMock } from '../../../../mocks/__tests__/create-result-championship.mock'
+import { ForbiddenException } from '../../../shared/errs/forbidden-exception'
+import { NotFoundException } from '../../../shared/errs/not-found-exception'
 import { DeleteTeamUseCase } from '../delete-team.usecase'
 
 describe('DeleteTeamUseCase integration tests', () => {
@@ -53,7 +55,7 @@ describe('DeleteTeamUseCase integration tests', () => {
       try {
         await sut.execute(team.id)
       } catch (error) {
-        expect(error).toBeInstanceOf(Error)
+        expect(error).toBeInstanceOf(ForbiddenException)
         expect(error.message).toBe('The team is already registered in a match and cannot be deleted')
       }
 
@@ -66,8 +68,8 @@ describe('DeleteTeamUseCase integration tests', () => {
     try {
       await sut.execute('fake id')
     } catch (error) {
-      expect(error).toBeInstanceOf(Error)
-      expect(error.message).toBe('Resource not found')
+      expect(error).toBeInstanceOf(NotFoundException)
+      expect(error.message).toBe('Team not found')
     }
 
   })

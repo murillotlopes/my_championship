@@ -1,6 +1,8 @@
 import { BracketModel } from '../../bracket/model/bracket.model'
 import { Round } from '../../bracket/model/round.enum'
 import { BracketRepositoryProvider } from '../../bracket/repository/bracket-repository.provider'
+import { ForbiddenException } from '../../shared/errs/forbidden-exception'
+import { NotFoundException } from '../../shared/errs/not-found-exception'
 import { UseCase } from '../../shared/providers/usecase'
 import { DefineWinnerService } from '../../shared/services/define-winner.service'
 import { GenerateMatchScoreService } from '../../shared/services/generate-match-score.service'
@@ -25,11 +27,11 @@ export class SemiFinalResultUseCase implements UseCase {
 
     const championship = await this.championshipRepository.getById(input)
 
-    if (!championship) throw new Error('Championship not found')
+    if (!championship) throw new NotFoundException('Championship not found')
 
     const semi_final = await this.bracketRepository.getChampionship(championship.id, Round.SEMI_FINAL)
 
-    if (semi_final.find(item => item.realized)) throw new Error('Semi final already classified')
+    if (semi_final.find(item => item.realized)) throw new ForbiddenException('Semi final already classified')
 
     for (const bracket of semi_final) {
 
