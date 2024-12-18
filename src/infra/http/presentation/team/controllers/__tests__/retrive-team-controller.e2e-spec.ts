@@ -5,7 +5,7 @@ import { TeamEntity } from '../../../../../database/typeorm/entities/team.entity
 import { TeamRepositoryTypeORM } from '../../../../../database/typeorm/repositories/team-repository.typeorm'
 import app from '../../../../app'
 
-describe('Retrive end to end tests', () => {
+describe('RetriveTeam end to end tests', () => {
 
   let connection: DataSource
   let teamRepository: TeamRepositoryTypeORM
