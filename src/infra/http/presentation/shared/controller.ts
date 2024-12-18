@@ -41,6 +41,7 @@ export abstract class Controller {
 
     if (input.created_at) errorExtracted['created_at'] = ['created_at should not be defined']
     if (input.updated_at) errorExtracted['updated_at'] = ['updated_at should not be defined']
+    if (input.id) errorExtracted['id'] = ['id should not be defined']
 
     const prepValidate: BaseModel = plainToInstance(dto, input)
 

@@ -85,8 +85,8 @@ Foram modelados dois **diagramas entidade-relacionamento**:
    npm run dev
    ```
 5. A aplicação está disponivel para testes:
-   1. Pelo insominia
-   2. Pelo Swagger no endereço `http://localhost:4000`
+   1. Pelo <span id="insomnia">Insominia</span> <a href="./my_championship_insominia.json" download="my_championship_insominia.json">baixando a coleção</a>
+   2. Pelo <span id="swagger">Swagger</span> no endereço `http://localhost:4000/api-docs/`
 ---
 
 ## Scripts da Aplicação

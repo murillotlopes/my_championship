@@ -22,3 +22,5 @@ Rotas disponíveis na aplicação:
 | GET    | `/team/:id`                             | Retorna um time                                                                      |
 | DELETE | `/team/:id`                             | Apagar time                                                                          |
 | POST   | `/bracket/draw-matches/:championshipId` | Sortear as partidas da primeira fase                                                 |
+
+Utilize o [Swagger](PROJECT_DOCUMENTATION.md#swagger) ou [Insominia](PROJECT_DOCUMENTATION.md#insominia) para testa-las!

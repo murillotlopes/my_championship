@@ -1,0 +1,848 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API My Championship",
+    "description": "Documentação da API My Championship",
+    "version": "0.1.0"
+  },
+  "host": "localhost:4000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Campeonato",
+      "description": "Endpoints relacionados a campeonato"
+    },
+    {
+      "name": "Fases do Campeonato",
+      "description": "Processa os resultados de cada fase até a classificação final"
+    },
+    {
+      "name": "Time",
+      "description": "Endpoints relacionados a times"
+    },
+    {
+      "name": "Chaveamento",
+      "description": "Increve os times na competição"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/championship": {
+      "post": {
+        "tags": [
+          "Campeonato"
+        ],
+        "summary": "Criar",
+        "description": "Cria um campeonato e retorna o campeonato criado",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "Dados para criar um novo campeonato",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Campeonato A"
+                }
+              },
+              "required": [
+                "name"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Campeonato criado com sucesso",
+            "schema": {
+              "$ref": "#/components/schemas/Championship"
+            }
+          },
+          "422": {
+            "description": "Falha no processamento do payload",
+            "schema": {
+              "$ref": "#/components/schemas/UnprocessableEntityException"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Campeonato"
+        ],
+        "summary": "Buscar",
+        "description": "Retorna uma lista de campeonatos",
+        "responses": {
+          "200": {
+            "description": "Campeonatos recuperado",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Championship"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/championship/{id}": {
+      "patch": {
+        "tags": [
+          "Campeonato"
+        ],
+        "summary": "Editar",
+        "description": "Edita o nome do capeonato cadastrado",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "Dados para editar um capeonato",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Campeonato A"
+                }
+              },
+              "required": [
+                "name"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Campeonato editado com sucesso",
+            "schema": {
+              "$ref": "#/components/schemas/Championship"
+            }
+          },
+          "422": {
+            "description": "Falha no processamento do payload",
+            "schema": {
+              "$ref": "#/components/schemas/UnprocessableEntityException"
+            }
+          },
+          "404": {
+            "description": "Time não encontrado",
+            "schema": {
+              "$ref": "#/components/schemas/NotFoundException"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Campeonato"
+        ],
+        "summary": "Buscar um",
+        "description": "Retorna um campeonato",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Campeonato recuperado",
+            "schema": {
+              "$ref": "#/components/schemas/Championship"
+            }
+          },
+          "404": {
+            "description": "Campeonato não encontrado",
+            "schema": {
+              "$ref": "#/components/schemas/NotFoundException"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Campeonato"
+        ],
+        "summary": "Remover",
+        "description": "Apaga um campeonato",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Campeonato apagado",
+            "schema": {
+              "$ref": "#/components/schemas/Championship"
+            }
+          },
+          "404": {
+            "description": "Campeonato não encontrado",
+            "schema": {
+              "$ref": "#/components/schemas/NotFoundException"
+            }
+          },
+          "403": {
+            "description": "Não pode ser deletado",
+            "schema": {
+              "$ref": "#/components/schemas/ForbiddenException"
+            }
+          }
+        }
+      }
+    },
+    "/championship/quarter-final/{id}": {
+      "post": {
+        "tags": [
+          "Fases do Campeonato"
+        ],
+        "summary": "Quartas de final",
+        "description": "Gera a pontuação das partidas e classifica para a próxima fase",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Quartas de final bem sucessida",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quarter_final": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Bracket"
+                  }
+                },
+                "semi_final": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Bracket"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Fase já classificada",
+            "schema": {
+              "$ref": "#/components/schemas/UnprocessableEntityException"
+            }
+          },
+          "404": {
+            "description": "Campeonato não encontrado",
+            "schema": {
+              "$ref": "#/components/schemas/NotFoundException"
+            }
+          }
+        }
+      }
+    },
+    "/championship/semi-final/{id}": {
+      "post": {
+        "tags": [
+          "Fases do Campeonato"
+        ],
+        "summary": "Semi de final",
+        "description": "Gera a pontuação das partidas e classifica para a próxima fase",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Semi de final bem sucessida",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "semi_final": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Bracket"
+                  }
+                },
+                "final": {
+                  "$ref": "#/components/schemas/Bracket"
+                },
+                "third_place_playoff": {
+                  "$ref": "#/components/schemas/Bracket"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Fase já classificada",
+            "schema": {
+              "$ref": "#/components/schemas/UnprocessableEntityException"
+            }
+          },
+          "404": {
+            "description": "Campeonato não encontrado",
+            "schema": {
+              "$ref": "#/components/schemas/NotFoundException"
+            }
+          }
+        }
+      }
+    },
+    "/championship/third-place-playoff/{id}": {
+      "post": {
+        "tags": [
+          "Fases do Campeonato"
+        ],
+        "summary": "Disputa pelo 3º lugar",
+        "description": "Gera a pontuação da partida",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Disputa pelo 3º lugar bem sucessida",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "third_place": {
+                  "$ref": "#/components/schemas/Bracket"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Fase já classificada",
+            "schema": {
+              "$ref": "#/components/schemas/UnprocessableEntityException"
+            }
+          },
+          "404": {
+            "description": "Campeonato não encontrado",
+            "schema": {
+              "$ref": "#/components/schemas/NotFoundException"
+            }
+          }
+        }
+      }
+    },
+    "/championship/final/{id}": {
+      "post": {
+        "tags": [
+          "Fases do Campeonato"
+        ],
+        "summary": "Final",
+        "description": "Gera a pontuação da partida",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Partida final bem sucessida",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "third_place": {
+                  "$ref": "#/components/schemas/Bracket"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Fase já classificada",
+            "schema": {
+              "$ref": "#/components/schemas/UnprocessableEntityException"
+            }
+          },
+          "404": {
+            "description": "Campeonato não encontrado",
+            "schema": {
+              "$ref": "#/components/schemas/NotFoundException"
+            }
+          }
+        }
+      }
+    },
+    "/championship/ranking/{id}": {
+      "get": {
+        "tags": [
+          "Fases do Campeonato"
+        ],
+        "summary": "Classificação final",
+        "description": "Gera a classificação do campeonato",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Classificação bem sucessida",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "championship": {
+                  "$ref": "#/components/schemas/Championship"
+                },
+                "ranking": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ranking"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Fase já classificada",
+          "schema": {
+            "$ref": "#/components/schemas/UnprocessableEntityException"
+          }
+        },
+        "404": {
+          "description": "Campeonato não encontrado",
+          "schema": {
+            "$ref": "#/components/schemas/NotFoundException"
+          }
+        }
+      }
+    },
+    "/team": {
+      "post": {
+        "tags": [
+          "Time"
+        ],
+        "summary": "Criar",
+        "description": "Cria um time e retorna o time criado",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "Dados para criar um novo time",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Time A"
+                }
+              },
+              "required": [
+                "name"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Time criado com sucesso",
+            "schema": {
+              "$ref": "#/components/schemas/Team"
+            }
+          },
+          "422": {
+            "description": "Falha no processamento do payload",
+            "schema": {
+              "$ref": "#/components/schemas/UnprocessableEntityException"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Time"
+        ],
+        "summary": "Buscar",
+        "description": "Retorna uma lista de times",
+        "responses": {
+          "200": {
+            "description": "Times recuperado",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Team"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{id}": {
+      "patch": {
+        "tags": [
+          "Time"
+        ],
+        "summary": "Editar",
+        "description": "Edita o nome do time cadastrado",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "Dados para editar um time",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Time A"
+                }
+              },
+              "required": [
+                "name"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Time editado com sucesso",
+            "schema": {
+              "$ref": "#/components/schemas/Team"
+            }
+          },
+          "422": {
+            "description": "Falha no processamento do payload",
+            "schema": {
+              "$ref": "#/components/schemas/UnprocessableEntityException"
+            }
+          },
+          "404": {
+            "description": "Time não encontrado",
+            "schema": {
+              "$ref": "#/components/schemas/NotFoundException"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Time"
+        ],
+        "summary": "Buscar um",
+        "description": "Retorna um time",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Time recuperado",
+            "schema": {
+              "$ref": "#/components/schemas/Team"
+            }
+          },
+          "404": {
+            "description": "Time não encontrado",
+            "schema": {
+              "$ref": "#/components/schemas/NotFoundException"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Time"
+        ],
+        "summary": "Remover",
+        "description": "Apaga um time",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Time apagado",
+            "schema": {
+              "$ref": "#/components/schemas/Team"
+            }
+          },
+          "404": {
+            "description": "Time não encontrado",
+            "schema": {
+              "$ref": "#/components/schemas/NotFoundException"
+            }
+          },
+          "403": {
+            "description": "Não pode ser deletado",
+            "schema": {
+              "$ref": "#/components/schemas/ForbiddenException"
+            }
+          }
+        }
+      }
+    },
+    "/bracket/draw-matches/{id}": {
+      "post": {
+        "tags": [
+          "Chaveamento"
+        ],
+        "summary": "Cadastra e sorteia",
+        "description": "Cadastra os times em um campeonato e sorteia os jogos da primeira fase",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "Lista com 8 ids de times que são cadastrados",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "teams": {
+                  "type": "array",
+                  "example": [
+                    "2qLpun6tl9gJo9a1q2UgsQE0uzu",
+                    "2qLpwfGM0n9FN15sHmFR3dovoGb",
+                    "2qLpxB3luMm6LuFVf8jp3sZhCCi",
+                    "2qLpyXxhOff9S2VbmZRiIPo3HDx",
+                    "2qLpytJ0YvNSYOMj5JXOs2SBBhJ",
+                    "2qLpzTJTQTMp9evBwQezBwVCEkk",
+                    "2qLpzwc51HNbRPJs3Yol1AbUsHc",
+                    "2qLq0KnM92JVTpdOvDQXZB0pLkt"
+                  ]
+                }
+              },
+              "required": [
+                "teams"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Times cadastrados e sorteio realizado com sucesso",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Bracket"
+              }
+            }
+          },
+          "422": {
+            "description": "O campeonado já foi sorteado",
+            "schema": {
+              "$ref": "#/components/schemas/UnprocessableEntityException"
+            }
+          },
+          "404": {
+            "description": "Time não encontrado",
+            "schema": {
+              "$ref": "#/components/schemas/NotFoundException"
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ForbiddenException": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "number",
+            "example": 403
+          }
+        }
+      },
+      "NotFoundException": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "number",
+            "example": 404
+          }
+        }
+      },
+      "UnprocessableEntityException": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "number",
+            "example": 422
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "Championship": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "2qOVenLIZRIK2gCfHBmcMfNMfnW"
+          },
+          "name": {
+            "type": "string",
+            "example": "Campeonato A"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-18T00:00:00.000Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-18T00:00:00.000Z"
+          }
+        }
+      },
+      "Bracket": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "2qOVenLIZRIK2gCfHBmcMfNMfnW"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-18T00:00:00.000Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-18T00:00:00.000Z"
+          },
+          "roun": {
+            "type": "string",
+            "example": "Fase da Competição"
+          },
+          "team_a_points": {
+            "type": "number",
+            "example": 0
+          },
+          "team_b_points": {
+            "type": "number",
+            "example": 0
+          },
+          "realized": {
+            "type": "boolean",
+            "example": true
+          },
+          "team_a": {
+            "type": "object",
+            "$ref": "#/components/schemas/Team"
+          },
+          "team_b": {
+            "type": "object",
+            "$ref": "#/components/schemas/Team"
+          }
+        }
+      },
+      "Team": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "2qOVenLIZRIK2gCfHBmcMfNMfnW"
+          },
+          "name": {
+            "type": "string",
+            "example": "Time A"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-18T00:00:00.000Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-18T00:00:00.000Z"
+          }
+        }
+      },
+      "Ranking": {
+        "type": "object",
+        "properties": {
+          "team_name": {
+            "type": "string",
+            "example": "Time C"
+          },
+          "total_score": {
+            "type": "number",
+            "example": 5
+          },
+          "placement_ranking": {
+            "type": "number",
+            "example": 1
+          },
+          "team_registration_date": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-18T00:00:00.000Z"
+          }
+        }
+      }
+    }
+  }
+}
