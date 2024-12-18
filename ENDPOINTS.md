@@ -9,6 +9,7 @@ Rotas disponíveis na aplicação:
 | POST   | `/championship`                         | Criar campeonato                                                                     |
 | PATCH  | `/championship/:id`                     | Editar nome do campeonato                                                            |
 | GET    | `/championship`                         | Listar campeonatos                                                                   |
+| GET    | `/championship:id`                      | Retorna um campeonato                                                                |
 | DELTE  | `/championship:id`                      | Apagar campeonato                                                                    |
 | POST   | `/championship/quarter-final/:id`       | Obter resultado das quartas de final e chaveamento da semi final                     |
 | POST   | `/championship/semi-final/:id`          | Obter resultado da semi final e chaveamento da partida pelo 3º lugar e partida final |
@@ -18,5 +19,6 @@ Rotas disponíveis na aplicação:
 | POST   | `/team`                                 | Criar time                                                                           |
 | PATCH  | `/team/:id`                             | Editar nome do time                                                                  |
 | GET    | `/team`                                 | Listar times                                                                         |
+| GET    | `/team/:id`                             | Retorna um time                                                                      |
 | DELETE | `/team/:id`                             | Apagar time                                                                          |
 | POST   | `/bracket/draw-matches/:championshipId` | Sortear as partidas da primeira fase                                                 |
