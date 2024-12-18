@@ -22,11 +22,11 @@ class DrawMatchesController extends Controller {
   protected execute = async (req: Request): Promise<DrawMatchesOutput[]> => {
 
     const championshipId = req.params?.championshipId
-    const body = req.body
+    const teams = req.body.teams
 
     const obj: DrawMatchesInput = {
       championshipId,
-      teams: body
+      teams
     }
 
     return this.drawMatchesUseCase.execute(obj)
