@@ -52,6 +52,7 @@ describe('EditTeam end to end tests', () => {
 
     expect(response.status).toBe(422)
     expect(response.body).toHaveProperty('message')
+    expect(response.body.message).toBe('Invalid payload')
     expect(response.body).toHaveProperty('statusCode')
     expect(response.body).toHaveProperty('error')
 
@@ -62,6 +63,7 @@ describe('EditTeam end to end tests', () => {
 
     expect(response.status).toBe(422)
     expect(response.body).toHaveProperty('message')
+    expect(response.body.message).toBe('Invalid payload')
     expect(response.body).toHaveProperty('statusCode')
     expect(response.body).toHaveProperty('error')
 
