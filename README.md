@@ -1,7 +1,7 @@
 
 # MY CHAMPIONSHIP
 
-Bem vindo ao projeto! Utiulize os links abaixo para navegar pela documentação:
+Bem vindo ao projeto! Utilize os links abaixo para navegar pela documentação:
 
 - [Documentação do Projeto](PROJECT_DOCUMENTATION.MD)
 
