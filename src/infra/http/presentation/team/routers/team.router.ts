@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { Route } from '../../shared/route'
 import createTeamController from '../controllers/create-team.controller'
 import editTeamController from '../controllers/edit-team.controller'
+import retriveTeamController from '../controllers/retrive-team.controller'
 
 class TeamRouter extends Route {
 
@@ -14,6 +15,7 @@ class TeamRouter extends Route {
 
     this.router.post('/', createTeamController.init.bind(this))
     this.router.post('/:teamId', editTeamController.init.bind(this))
+    this.router.get('/', retriveTeamController.init.bind(this))
 
     return this.router
   }
