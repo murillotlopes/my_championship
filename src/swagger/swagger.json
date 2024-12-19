@@ -675,10 +675,10 @@
               }
             }
           },
-          "422": {
+          "403": {
             "description": "O campeonado já foi sorteado",
             "schema": {
-              "$ref": "#/components/schemas/UnprocessableEntityException"
+              "$ref": "#/components/schemas/ForbiddenException"
             }
           },
           "404": {
