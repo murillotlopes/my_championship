@@ -25,6 +25,8 @@ export class FinalResultUseCase implements UseCase {
 
     const finalBracket = await this.bracketRepository.getChampionship(championship.id, Round.FINAL)
 
+    if (!finalBracket.length) throw new ForbiddenException('Run semi final games before final')
+
     if (finalBracket.find(item => item.realized)) throw new ForbiddenException('Final already classified')
 
     const final = finalBracket[0]

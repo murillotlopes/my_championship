@@ -3,6 +3,7 @@ import { ChampionshipRepositoryInMemory } from '../../../../infra/database/in-me
 import TeamRepositoryInMemory from '../../../../infra/database/in-memory/team-repository.in-memory'
 import { createResultChampionshipMock } from '../../../../mocks/__tests__/create-result-championship.mock'
 import { Round } from '../../../bracket/model/round.enum'
+import { ForbiddenException } from '../../../shared/errs/forbidden-exception'
 import { GenerateMatchScoreService } from '../../../shared/services/generate-match-score.service'
 import { ChampionshipModel } from '../../model/championship.model'
 import { FinalResultUseCase } from '../final-result.usecase'
@@ -84,6 +85,19 @@ describe('FinalResultUseCase integration tests', () => {
     } catch (error: any) {
       expect(error).toBeInstanceOf(Error)
       expect(error['message']).toBe('Final already classified')
+    }
+
+  })
+
+  test('I expect an exception to be thrown when the previous championship stage has not occurred', async () => {
+
+    let championshipWithoutTeams = await championshipRepository.save({ name: 'Championship without teams' })
+
+    try {
+      await sut.execute(championshipWithoutTeams.id as string)
+    } catch (error: any) {
+      expect(error).toBeInstanceOf(ForbiddenException)
+      expect(error['message']).toBe('Run semi final games before final')
     }
 
   })

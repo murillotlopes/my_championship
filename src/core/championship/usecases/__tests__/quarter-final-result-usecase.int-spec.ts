@@ -5,6 +5,7 @@ import { createChampionshipMock } from '../../../../mocks/__tests__/championship
 import { createTeamMock } from '../../../../mocks/__tests__/team.mock'
 import { BracketModel } from '../../../bracket/model/bracket.model'
 import { Round } from '../../../bracket/model/round.enum'
+import { ForbiddenException } from '../../../shared/errs/forbidden-exception'
 import { DefineWinnerService } from '../../../shared/services/define-winner.service'
 import { GenerateMatchScoreService } from '../../../shared/services/generate-match-score.service'
 import { ShuffleArray } from '../../../shared/services/shuffle-array.service'
@@ -115,6 +116,17 @@ describe('QuarterFinalResultUseCase integration tests', () => {
 
   })
 
+  test('I expect an exception to be thrown when teams have not been registered in the championship', async () => {
 
+    let championshipWithoutTeams = await championshipRepository.save({ name: 'Championship without teams' })
+
+    try {
+      await sut.execute(championshipWithoutTeams.id as string)
+    } catch (error: any) {
+      expect(error).toBeInstanceOf(ForbiddenException)
+      expect(error['message']).toBe('Championship without registered teams. Register them first before you get the results of the quarterfinals')
+    }
+
+  })
 
 })

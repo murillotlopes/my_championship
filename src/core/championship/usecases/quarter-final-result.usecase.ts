@@ -30,6 +30,8 @@ export class QuarterFinalResultUseCase implements UseCase {
 
     const quarter_final = await this.bracketRepository.getChampionship(championship.id, Round.QUARTER_FINAL)
 
+    if (!quarter_final.length) throw new ForbiddenException('Championship without registered teams. Register them first before you get the results of the quarterfinals')
+
     if (quarter_final.find(item => item.realized)) throw new ForbiddenException('Quarter final already classified')
 
     for (const bracket of quarter_final) {

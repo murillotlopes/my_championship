@@ -29,7 +29,7 @@ export class ChampionshipRankingUseCase implements UseCase {
     // se o campeonato foi finalizado
     const finalList = await this.bracketRepository.getChampionship(championship.id, Round.FINAL)
 
-    if (finalList.find(item => !item.realized)) throw new ForbiddenException('The championship has not been finalized')
+    if (!finalList.length || finalList.find(item => !item.realized)) throw new ForbiddenException('The championship has not been finalized')
 
     const generalClassification: GeneralClassificationOutput = {
       championship,
