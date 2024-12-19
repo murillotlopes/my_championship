@@ -1,6 +1,6 @@
 {
   "name": "my_championship",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "neighborhood soccer championship simulator",
   "main": "server.ts",
   "engines": {
@@ -8,6 +8,7 @@
     "npm": "^10.5.x"
   },
   "scripts": {
+    "prestart": "npm run build",
     "start": "node --env-file=.env dist/src/server.js",
     "dev": "tsx watch --env-file=.env.development src/server.ts",
     "test": "npx dotenv-cli -e .env.test -- jest",

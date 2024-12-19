@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "title": "API My Championship",
-    "description": "Documentação da API My Championship",
-    "version": "0.1.0"
+    "description": "Documentação da API My Championship\n\n1. Crie campeonatos\n2. Cadastre seus times\n3. Inscreva os times no campeonato\n4. Execute as fases do campeonato para obter o placar e a classificação\n5. Obtenha a classificação final",
+    "version": "0.1.1"
   },
   "host": "localhost:4000",
   "basePath": "/",
@@ -13,16 +13,16 @@
       "description": "Endpoints relacionados a campeonato"
     },
     {
-      "name": "Fases do Campeonato",
-      "description": "Processa os resultados de cada fase até a classificação final"
-    },
-    {
       "name": "Time",
       "description": "Endpoints relacionados a times"
     },
     {
       "name": "Chaveamento",
       "description": "Increve os times na competição"
+    },
+    {
+      "name": "Fases do Campeonato",
+      "description": "Processa os resultados de cada fase até a classificação final"
     }
   ],
   "schemes": [
@@ -675,10 +675,10 @@
               }
             }
           },
-          "422": {
+          "403": {
             "description": "O campeonado já foi sorteado",
             "schema": {
-              "$ref": "#/components/schemas/UnprocessableEntityException"
+              "$ref": "#/components/schemas/ForbiddenException"
             }
           },
           "404": {

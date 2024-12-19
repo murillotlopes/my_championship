@@ -31,6 +31,8 @@ export class SemiFinalResultUseCase implements UseCase {
 
     const semi_final = await this.bracketRepository.getChampionship(championship.id, Round.SEMI_FINAL)
 
+    if (!semi_final.length) throw new ForbiddenException('Run quarter final games before semi final')
+
     if (semi_final.find(item => item.realized)) throw new ForbiddenException('Semi final already classified')
 
     for (const bracket of semi_final) {

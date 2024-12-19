@@ -25,6 +25,8 @@ export class ThirdPlaceResultUseCase implements UseCase {
 
     const third_place_playoff = await this.bracketRepository.getChampionship(championship.id, Round.THIRD_PLACE_PLAYOFF)
 
+    if (!third_place_playoff.length) throw new ForbiddenException('Run semi final games before playoff')
+
     if (third_place_playoff.find(item => item.realized)) throw new ForbiddenException('Third Place Playoff already classified')
 
     const third_place = third_place_playoff[0]

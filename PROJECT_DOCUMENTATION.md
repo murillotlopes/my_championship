@@ -69,6 +69,10 @@ Foram modelados dois **diagramas entidade-relacionamento**:
    docker rm api-db # remove o container
    docker rm -f api-db # se ocorrer algum problema nos comandos acima, este força a remoção
    ```
+   - Uma vez criado o container, nas próximas execuções faça
+      ```bash
+   docker start api-db
+   ```
 3. A sincronização do banco não está ativa. Será preciso rodar manualmente as migrações:
    - Caso tenha modificado a porta no docker-compose.yml ou prefira rodar localmente o banco postgres
      - Não se esqueça de alterar o arquivo .env.development e .env.test

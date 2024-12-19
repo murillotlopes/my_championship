@@ -5,6 +5,7 @@ import { createChampionshipMock } from '../../../../mocks/__tests__/championship
 import { createTeamMock } from '../../../../mocks/__tests__/team.mock'
 import { BracketModel } from '../../../bracket/model/bracket.model'
 import { Round } from '../../../bracket/model/round.enum'
+import { ForbiddenException } from '../../../shared/errs/forbidden-exception'
 import { DefineWinnerService } from '../../../shared/services/define-winner.service'
 import { GenerateMatchScoreService } from '../../../shared/services/generate-match-score.service'
 import { ShuffleArray } from '../../../shared/services/shuffle-array.service'
@@ -23,7 +24,7 @@ describe('SemiFinalResultUseCase integration tests', () => {
   let teamRepository: TeamRepositoryInMemory
   let championship: ChampionshipModel
 
-  beforeEach(async () => {
+  beforeAll(async () => {
 
     championshipRepository = new ChampionshipRepositoryInMemory()
     bracketRepository = new BracketRepositoryInMemory()
@@ -39,18 +40,18 @@ describe('SemiFinalResultUseCase integration tests', () => {
 
     championship = await championshipRepository.save(championshipMock)
 
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 4; i++) {
       const teamMock = createTeamMock()
       const team = await teamRepository.save(teamMock)
       teams.push(team)
     }
 
-    for (let i = 0; i < 8; i += 2) {
+    for (let i = 0; i < 4; i += 2) {
 
       const obj: BracketModel = {
         championship,
-        realized: true,
-        round: Round.QUARTER_FINAL,
+        realized: false,
+        round: Round.SEMI_FINAL,
         team_a: teams[i],
         team_b: teams[i + 1],
         team_a_points: Math.floor(Math.random() * (10 - 0) + 0),
@@ -110,6 +111,19 @@ describe('SemiFinalResultUseCase integration tests', () => {
     } catch (error: any) {
       expect(error).toBeInstanceOf(Error)
       expect(error['message']).toBe('Semi final already classified')
+    }
+
+  })
+
+  test('I expect an exception to be thrown when the previous championship stage has not occurred', async () => {
+
+    let championshipWithoutTeams = await championshipRepository.save({ name: 'Championship without teams' })
+
+    try {
+      await sut.execute(championshipWithoutTeams.id as string)
+    } catch (error: any) {
+      expect(error).toBeInstanceOf(ForbiddenException)
+      expect(error['message']).toBe('Run quarter final games before semi final')
     }
 
   })
